@@ -15,11 +15,25 @@ public class Product {
         public Product(int id,
                        String name,
                        String desc) {
+                this(id, name, desc, 0.0, 0);
+        }
+        /** Construct a new Product.
+         * @param[in]   id              unique identifier for this Product
+         * @pre         id MUST be unique
+         * @param[in]   name            name of Product
+         * @param[in]   desc            extra details to describe Product
+         * @param[in]   price           price of product
+         * @param[in]   quantity        quantity of product */
+        public Product(int id,
+                       String name,
+                       String desc,
+                       double price,
+                       int quantity) {
                 this.id = id;
                 this.name = name;
                 this.desc = desc;
-                this.price = 0.0;
-                this.quantity = 0;
+                this.price = price;
+                this.quantity = quantity;
         }
 
         /** Obtain the unique identifier describing this Product .
