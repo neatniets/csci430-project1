@@ -7,7 +7,7 @@ public class Client implements Serializable {
   private String phone;
   private String id;
   private static final String Client_STRING = "M";
-  private List shoppingCart = new LinkedList();
+  private shoppingCart cart = new shoppingCart();
   public  Client (String name, String address, String phone) {
     this.name = name;
     this.address = address;
@@ -26,6 +26,9 @@ public class Client implements Serializable {
   }
   public String getId() {
     return id;
+  }
+  public shoppingCart getShoppingCart() {
+          return cart;
   }
   public void setName(String newName) {
     name = newName;
