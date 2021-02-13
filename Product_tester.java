@@ -1,21 +1,21 @@
 import java.util.Iterator;
-public class product_tester {
+public class Product_tester {
         public static void main(String[] args) {
-                product milk1 = new product(3, "milk", "skim");
-                product milk2 = new product(1, "milk", "2%");
-                product chocolate = new product(2, "chocolate", "dark");
+                Product milk1 = new Product(3, "milk", "skim");
+                Product milk2 = new Product(1, "milk", "2%");
+                Product chocolate = new Product(2, "chocolate", "dark");
                 /* intentionally uses the same ID as milk1 to show error */
-                product eggs = new product(3, "eggs", "1 dozen");
+                Product eggs = new Product(3, "eggs", "1 dozen");
 
-                System.out.println("Printing all products.");
+                System.out.println("Printing all Products.");
                 System.out.print("milk1:\n" + milk1
                                  + "milk2:\n" + milk2
                                  + "chocolate:\n" + chocolate
                                  + "eggs:\n" + eggs);
                 System.out.println();
 
-                System.out.println("Adding all products to list");
-                product_list list = new product_list();
+                System.out.println("Adding all Products to list");
+                ProductList list = new ProductList();
                 System.out.println("Attempting to add milk1 to list returned: "
                                    + list.add(milk1) + " (should be true)");
                 System.out.println("Attempting to add milk2 to list returned: "
@@ -28,13 +28,13 @@ public class product_tester {
                 System.out.println();
 
                 System.out.println("Iterating over whole list");
-                Iterator<product> iter = list.iterator();
+                Iterator<Product> iter = list.iterator();
                 while (iter.hasNext()) {
                         System.out.print(iter.next());
                 }
                 System.out.println();
 
-                System.out.println("Try finding products");
+                System.out.println("Try finding Products");
                 int id1 = 1,
                     id2 = 4;
                 System.out.print("Searching for " + id1 + " returned:\n"

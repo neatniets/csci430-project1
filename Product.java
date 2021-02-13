@@ -1,18 +1,18 @@
-/** Represents a product that the warehouse stocks. */
-public class product {
+/** Represents a Product that the warehouse stocks. */
+public class Product {
         private int id;         //!< unique identifier
-        private String name;    //!< name of product
+        private String name;    //!< name of Product
         private String desc;    //!< optional extra details
         private double price;   //!< warehouse sale price
         private int quantity;   //!< quantity in stock in the warehouse
 
-        /** Construct a new product.
-         * @param[in]   id      unique identifier for this product
+        /** Construct a new Product.
+         * @param[in]   id      unique identifier for this Product
          * @pre         id MUST be unique
-         * @param[in]   name    name of product
-         * @param[in]   desc    extra details to describe product
+         * @param[in]   name    name of Product
+         * @param[in]   desc    extra details to describe Product
          * @post        price and quantity are set to 0 */
-        public product(int id,
+        public Product(int id,
                        String name,
                        String desc) {
                 this.id = id;
@@ -22,54 +22,54 @@ public class product {
                 this.quantity = 0;
         }
 
-        /** Obtain the unique identifier describing this product .
-         * @return      unique identifier of product */
+        /** Obtain the unique identifier describing this Product .
+         * @return      unique identifier of Product */
         public int get_id() {
                 return id;
         }
 
-        /** Obtain the name of the product.
-         * @return      product name string */
+        /** Obtain the name of the Product.
+         * @return      Product name string */
         public String get_name() {
                 return name;
         }
 
-        /** Obtain the description of the product.
-         * @return      product description string */
+        /** Obtain the description of the Product.
+         * @return      Product description string */
         public String get_desc() {
                 return desc;
         }
 
-        /** Obtain the warehouse sale price of the product.
-         * @return      product sale price */
+        /** Obtain the warehouse sale price of the Product.
+         * @return      Product sale price */
         public double get_price() {
                 return price;
         }
 
-        /** Obtain the quantity of this product in stock in the warehouse.
+        /** Obtain the quantity of this Product in stock in the warehouse.
          * @return      quantity in stock */
         public int get_quantity() {
                 return quantity;
         }
 
-        /** Modify the name of the product.
-         * @param[in]   new_name        string of new name for product
+        /** Modify the name of the Product.
+         * @param[in]   new_name        string of new name for Product
          * @return      always returns true */
         public boolean set_name(String new_name) {
                 name = new_name;
                 return true;
         }
 
-        /** Modify the description of the product.
-         * @param[in]   new_desc        string of new description for product
+        /** Modify the description of the Product.
+         * @param[in]   new_desc        string of new description for Product
          * @return      always returns true */
         public boolean set_desc(String new_desc) {
                 desc = new_desc;
                 return true;
         }
 
-        /** Modify the price of the product.
-         * @param[in]   new_price       the price to change the product to
+        /** Modify the price of the Product.
+         * @param[in]   new_price       the price to change the Product to
          * @pre         new_price must be >=0.0
          * @post        price is not modified if this returns false
          * @return      false if price is below 0, true otherwise */
@@ -110,7 +110,7 @@ public class product {
                 }
         }
 
-        /** Create a string representing the product object.
+        /** Create a string representing the Product object.
          * @return      the string */
         public String toString() {
                 return "ID: " + get_id() + "\nName: " + get_name()
