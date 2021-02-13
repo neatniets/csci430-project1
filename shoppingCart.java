@@ -4,42 +4,32 @@ import java.io.*;
 public class shoppingCart implements Serializable {
   private static final long serialVersionUID = 1L;
   private List products = new LinkedList();
-  private static shoppingCart cart;
-  private shoppingCart() {
+  public shoppingCart() {
   }
-  public static shoppingCart instance() {
-    if (cart == null) {
-      return (cart = new shoppingCart());
-    } else {
-      return cart;
-    }
-  }
- /* 
-  public boolean insertProduct(ProductDummy product) {
-    cart.add(product);
+  public boolean insertProduct(Product product) {
+    products.add(product);
     return true;
   }
   
-  public boolean removeProduct(ProductDummy product) {
-    cart.remove(product);
+  public boolean removeProduct(Product product) {
+    products.remove(product);
     return true;
   }
   
   public Iterator getProducts() {
-    return cart.iterator();
+    return products.iterator();
   }
-  */
   
   private void writeObject(java.io.ObjectOutputStream output) {
     try {
       output.defaultWriteObject();
-      output.writeObject(cart);
+      //output.writeObject(cart);
     } catch(IOException ioe) {
       System.out.println(ioe);
     }
   }
   private void readObject(java.io.ObjectInputStream input) {
-    try {
+    /*try {
       if (cart != null) {
         return;
       } else {
@@ -54,9 +44,9 @@ public class shoppingCart implements Serializable {
       System.out.println("in shoppingCart readObject \n" + ioe);
     } catch(ClassNotFoundException cnfe) {
       cnfe.printStackTrace();
-    }
+    }*/
   }
   public String toString() {
-    return cart.toString();
+    return products.toString();
   }
 }
