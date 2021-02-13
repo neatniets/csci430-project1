@@ -10,16 +10,16 @@ public class shoppingCart implements Serializable {
     products.add(product);
     return true;
   }
-  
+
   public boolean removeProduct(Product product) {
     products.remove(product);
     return true;
   }
-  
+
   public Iterator getProducts() {
     return products.iterator();
   }
-  
+
   private void writeObject(java.io.ObjectOutputStream output) {
     try {
       output.defaultWriteObject();
