@@ -14,7 +14,6 @@ public SupplierList(){
 public Supplier find(int supp_id){
     return map.get(supp_id);
 }
-
 // add a Supplier to the list.
 public boolean add(Supplier Supp) {
 if (map.containsKey(Supp.getId())){
