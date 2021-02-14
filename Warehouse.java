@@ -84,7 +84,7 @@ public class Warehouse implements Serializable {
                                     String address,
                                     int phone) {
                 /* create supplier */
-                Supplier s = new Supplier(supplier_id, name, address, phone);
+                Supplier s = new Supplier(name, address, phone, supplier_id);
                 /* add supplier */
                 if (slist.add(s)) { // success
                         return s;
