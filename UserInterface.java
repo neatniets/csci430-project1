@@ -241,6 +241,130 @@ public class UserInterface {
     }
   }
 
+  public void UpdateClientsInformation() {
+    /* request ID */
+    String id = getToken("Client ID: ");
+    /* find client */
+    Client result = warehouse.getClient(id);
+    if (result != null){ // success
+      System.out.println(result);
+    }
+    else{ // fail
+      System.out.println("client not found");
+      return;
+    }
+
+    /* ask for what changes are desired */
+    String name;
+    String address;
+    String phone;
+    if (yesOrNo("Change name?")) {
+      name = getToken("New name: ");
+    } else {
+      name = result.getName();
+    }
+    if (yesOrNo("Change address?")) {
+      address = getToken("New address: ");
+    } else {
+      address = result.getAddress();
+    }
+    if (yesOrNo("Change phone?")) {
+      phone = getToken("New phone: ");
+    } else {
+      phone = result.getPhone();
+    }
+
+    warehouse.updateClientInfo(id, name, address, phone);
+    System.out.println(result);
+  }
+
+  public void UpdateSuppliersInformation() {
+    /* request ID */
+    int id = Integer.parseInt(getToken("Supplier ID: "));
+    /* find supplier */
+    Supplier result = warehouse.getSupplier(id);
+    if (result != null){ // success
+      System.out.println(result);
+    }
+    else{ // fail
+      System.out.println("supplier not found");
+      return;
+    }
+
+    /* ask for what changes are desired */
+    String name;
+    String address;
+    int phone;
+    if (yesOrNo("Change name?")) {
+      name = getToken("New name: ");
+    } else {
+      name = result.getName();
+    }
+    if (yesOrNo("Change address?")) {
+      address = getToken("New address: ");
+    } else {
+      address = result.getAddress();
+    }
+    if (yesOrNo("Change phone?")) {
+      phone = Integer.parseInt(getToken("New phone: "));
+    } else {
+      phone = result.getPhone();
+    }
+
+    warehouse.updateSupplierInfo(id, name, address, phone);
+    System.out.println(result);
+  }
+
+  public void UpdateProductsPrice() {
+    /* request ID */
+    int id = Integer.parseInt(getToken("Product ID: "));
+    /* find product */
+    Product result = warehouse.getProduct(id);
+    if (result != null){ // success
+      System.out.println(result);
+    }
+    else{ // fail
+      System.out.println("product not found");
+      return;
+    }
+
+    /* ask for what changes are desired */
+    double price;
+    if (yesOrNo("Change price?")) {
+      price = Double.parseDouble(getToken("New price: "));
+    } else {
+      price = result.get_price();
+    }
+
+    warehouse.updateProductPrice(id, price);
+    System.out.println(result);
+  }
+
+  public void AddItemToShoppingCart() {
+    String client_id = getToken("Client ID: ");
+    int product_id = Integer.parseInt(getToken("Product ID: "));
+    if (warehouse.add2ShoppingCart(client_id, product_id)) {
+      System.out.println("Successfully added to cart.");
+    } else {
+      System.out.println("Invalid request.");
+    }
+  }
+
+  public void PrintClientsShoppingCart() {
+    String id = getToken("Client ID: ");
+    /* get client's cart contents */
+    Iterator<Product> iter = warehouse.getCartContents(id);
+    if (iter == null) { // client not found
+      System.out.println("Client not found");
+      return;
+    }
+    /* print contents */
+    while (iter.hasNext()) {
+      System.out.print(iter.next().get_name() + " ");
+    }
+    System.out.println();
+  }
+
   //Function to invoke the suitable functions according to the user's choice.
   public void process() {
     int command;
@@ -265,7 +389,7 @@ public class UserInterface {
                                 break;
         case PRINT_INFORMATION_ON_SPECIFIC_PRODUCT:          PrintInfoAboutSpecificProduct();
                                 break;
-        /*case UPTADE_CLIENTS_PERSONAL_INFORMATION:            UpdateClientsInformation();
+        case UPTADE_CLIENTS_PERSONAL_INFORMATION:            UpdateClientsInformation();
                                 break;
         case UPDTE_SUPPLIERS_PERSONAL_INFORMATION:            UpdateSuppliersInformation();
                                 break;
@@ -274,7 +398,7 @@ public class UserInterface {
         case ADD_ITEM_TO_THE_SHOPPING_CART:                   AddItemToShoppingCart();
                                 break;
         case PRINT_A_CLIENTS_SHOPPING_CART:                   PrintClientsShoppingCart();
-                                break;*/
+                                break;
         case HELP:                                            help();
                                 break;
 
