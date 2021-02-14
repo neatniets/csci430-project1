@@ -27,7 +27,7 @@ public class ClientList implements Serializable {
           Iterator<Client> iter = getClients();
           while (iter.hasNext()) {
                   Client c = iter.next();
-                  if (c.getId() == client_id) {
+                  if (c.getId().compareTo(client_id) == 0) {
                           return c;
                   }
           }
