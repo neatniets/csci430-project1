@@ -43,7 +43,7 @@ public class Supplier {
  
 
   public String toString() {
-    return "ID:" + getId() + "\nSupplier name: " + getName() + "\naddress " + getAddress()+ "\nphone " + getPhone() + "\nproduct name";
+    return "ID:" + getId() + "\nSupplier name: " + getName() + "\naddress " + getAddress()+ "\nphone " + getPhone();
    
   }
 }
