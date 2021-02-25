@@ -332,7 +332,7 @@ public class UserInterface {
     if (yesOrNo("Change price?")) {
       price = Double.parseDouble(getToken("New price: "));
     } else {
-      price = result.get_price();
+      price = result.getPrice();
     }
 
     warehouse.updateProductPrice(id, price);
@@ -359,7 +359,7 @@ public class UserInterface {
     }
     /* print contents */
     while (iter.hasNext()) {
-      System.out.print(iter.next().get_name() + " ");
+      System.out.print(iter.next().getName() + " ");
     }
     System.out.println();
   }
