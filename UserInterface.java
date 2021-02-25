@@ -139,12 +139,11 @@ public class UserInterface {
   public void addProduct() {
 	    Product result;
 	    do {
-        int productid = Integer.parseInt(getToken("Enter Prouct ID:"));
 	      String name = getToken("Enter product's name:");
 	      double price
                       = Double.parseDouble(getToken("Enter product Price:"));
         int quantity = Integer.parseInt(getToken("Enter Product Quantity:"));
-	      result = warehouse.addProduct(productid, name, price, quantity);
+	      result = warehouse.addProduct(name, price, quantity);
 	      if (result != null) {
 	        System.out.println(result);
 	      } else {
@@ -231,7 +230,7 @@ public class UserInterface {
   //print specific product information.
   public void PrintInfoAboutSpecificProduct(){
     Product result;
-    int id = Integer.parseInt(getToken("enter products id:"));
+    String id = getToken("enter products id:");
     result = warehouse.getProduct(id);
     if (result != null){
       System.out.println(result);
@@ -317,7 +316,7 @@ public class UserInterface {
 
   public void UpdateProductsPrice() {
     /* request ID */
-    int id = Integer.parseInt(getToken("Product ID: "));
+    String id = getToken("Product ID: ");
     /* find product */
     Product result = warehouse.getProduct(id);
     if (result != null){ // success
@@ -342,7 +341,7 @@ public class UserInterface {
 
   public void AddItemToShoppingCart() {
     String client_id = getToken("Client ID: ");
-    int product_id = Integer.parseInt(getToken("Product ID: "));
+    String product_id = getToken("Product ID: ");
     if (warehouse.add2ShoppingCart(client_id, product_id)) {
       System.out.println("Successfully added to cart.");
     } else {

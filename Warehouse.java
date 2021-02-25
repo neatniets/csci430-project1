@@ -36,12 +36,11 @@ public class Warehouse implements Serializable {
          * @param[in]   quantity        quantity of product
          * @return      reference to Product object on success,
          *              null on failure */
-        public Product addProduct(int product_id,
-                                  String name,
+        public Product addProduct(String name,
                                   double price,
                                   int quantity) {
                 /* create product */
-                Product p = new Product(product_id, name, price, quantity);
+                Product p = new Product(name, price, quantity);
                 /* add product */
                 if (plist.add(p)) { // success
                         return p;
@@ -58,7 +57,7 @@ public class Warehouse implements Serializable {
          * @param       pid     ID of product
          * @return      product object with that ID on success,
          *              null if the product doesn't exist */
-        public Product getProduct(int pid) {
+        public Product getProduct(String pid) {
                 return plist.find(pid);
         }
         /** Update the price of a product.
@@ -68,7 +67,7 @@ public class Warehouse implements Serializable {
          *              price successfully changed
          * @return      product object found,
          *              null if product could not be found */
-        public Product updateProductPrice(int pid,
+        public Product updateProductPrice(String pid,
                                           double price) {
                 /* try to find product */
                 Product p = plist.find(pid);
@@ -148,7 +147,7 @@ public class Warehouse implements Serializable {
         }
 
         public boolean add2ShoppingCart(String client_id,
-                                        int product_id) {
+                                        String product_id) {
                 /* find client */
                 Client c = clist.getClient(client_id);
                 if (c == null) { // client not found

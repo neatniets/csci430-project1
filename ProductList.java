@@ -2,17 +2,17 @@ import java.util.TreeMap;
 import java.util.Iterator;
 /** Container which holds Products stocked by the warehouse. */
 public class ProductList {
-        private TreeMap<Integer, Product> map; //!< container for Products
+        private TreeMap<String, Product> map; //!< container for Products
 
         /** Construct a new Product list. */
         public ProductList() {
-                map = new TreeMap<Integer, Product>();
+                map = new TreeMap<String, Product>();
         }
 
         /** Find a Product by its ID.
          * @param[in]   prod_id         ID of Product being searched for
          * @return      Product with that ID or NULL if none exists */
-        public Product find(int prod_id) {
+        public Product find(String prod_id) {
                 return map.get(prod_id);
         }
 

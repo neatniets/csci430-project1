@@ -1,30 +1,26 @@
 /** Represents a Product that the warehouse stocks. */
 public class Product {
-        private int id;         //!< unique identifier
+        private static final String PROD_STRING = "P";
+
+        private String id;      //!< unique identifier
         private String name;    //!< name of Product
         private double price;   //!< warehouse sale price
         private int quantity;   //!< quantity in stock in the warehouse
 
         /** Construct a new Product.
-         * @param[in]   id      unique identifier for this Product
-         * @pre         id MUST be unique
          * @param[in]   name    name of Product
          * @post        price and quantity are set to 0 */
-        public Product(int id,
-                       String name) {
-                this(id, name, 0.0, 0);
+        public Product(String name) {
+                this(name, 0.0, 0);
         }
         /** Construct a new Product.
-         * @param[in]   id              unique identifier for this Product
-         * @pre         id MUST be unique
          * @param[in]   name            name of Product
          * @param[in]   price           price of product
          * @param[in]   quantity        quantity of product */
-        public Product(int id,
-                       String name,
+        public Product(String name,
                        double price,
                        int quantity) {
-                this.id = id;
+                this.id = PROD_STRING + (ProductIdServer.instance()).getId();
                 this.name = name;
                 this.price = price;
                 this.quantity = quantity;
@@ -32,7 +28,7 @@ public class Product {
 
         /** Obtain the unique identifier describing this Product .
          * @return      unique identifier of Product */
-        public int get_id() {
+        public String get_id() {
                 return id;
         }
 
