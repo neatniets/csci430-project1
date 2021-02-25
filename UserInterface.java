@@ -20,7 +20,8 @@ public class UserInterface {
   private static final int UPDATE_PRODUCTS_PRICE = 12;
   private static final int ADD_ITEM_TO_THE_SHOPPING_CART = 13;
   private static final int PRINT_A_CLIENTS_SHOPPING_CART = 14;
-  private static final int HELP = 15;
+  private static final int PROCESS_ORDER = 15;
+  private static final int HELP = 18;
   
   //Constructor
   private UserInterface() {
@@ -364,6 +365,16 @@ public class UserInterface {
     System.out.println();
   }
 
+  public void ProcessOrder() {
+    String id = getToken("Client ID: ");
+    Transaction t = warehouse.processOrder(id);
+    if (t == null) {
+      System.out.println("Order failed to process.");
+    } else {
+      System.out.println(t);
+    }
+  }
+
   //Function to invoke the suitable functions according to the user's choice.
   public void process() {
     int command;
@@ -398,6 +409,9 @@ public class UserInterface {
                                 break;
         case PRINT_A_CLIENTS_SHOPPING_CART:                   PrintClientsShoppingCart();
                                 break;
+        case PROCESS_ORDER:
+          ProcessOrder();
+          break;
         case HELP:                                            help();
                                 break;
 

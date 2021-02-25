@@ -8,11 +8,12 @@ clean:
 	-rm *.class
 
 UserInterface.class: UserInterface.java Warehouse.class Product.class \
-	Supplier.class Client.class
+	Supplier.class Client.class Transaction.class
 	$(JC) $<
 
 Warehouse.class: Warehouse.java ProductList.class Product.class Client.class \
-	Supplier.class ClientList.class SupplierList.class shoppingCart.class
+	Supplier.class ClientList.class SupplierList.class shoppingCart.class \
+	Transaction.class
 	$(JC) $<
 
 ProductList.class: ProductList.java Product.class

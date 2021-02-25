@@ -112,6 +112,17 @@ public class Warehouse implements Serializable {
                 return s;
         }
 
+        public Transaction processOrder(String client_id) {
+          Client c = clist.getClient(client_id);
+          /* make sure client exists */
+          if (c != null ) { // exists
+            /* process order */
+            return c.processOrder();
+          } else { // does not exist
+            return null;
+          }
+        }
+
         /* Matt got a working ID generator */
         public Client addClient(String name,
                                 String address,
