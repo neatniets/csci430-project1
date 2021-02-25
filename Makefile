@@ -30,13 +30,14 @@ WaitlistEntry.class: WaitlistEntry.java
 ClientList.class: ClientList.java Client.class
 	$(JC) $<
 
-Client.class: Client.java shoppingCart.class ClientIdServer.class
+Client.class: Client.java shoppingCart.class ClientIdServer.class \
+	Transaction.class CartItem.class
 	$(JC) $<
 
 ClientIdServer.class: ClientIdServer.java
 	$(JC) $<
 
-shoppingCart.class: shoppingCart.java
+shoppingCart.class: shoppingCart.java CartItem.class
 	$(JC) $<
 
 SupplierList.class: SupplierList.java Supplier.class
@@ -46,4 +47,7 @@ Supplier.class: Supplier.java
 	$(JC) $<
 
 Transaction.class: Transaction.java
+	$(JC) $<
+
+CartItem.class: CartItem.java
 	$(JC) $<

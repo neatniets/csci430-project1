@@ -6,6 +6,7 @@ public class Client implements Serializable {
   private String address;
   private String phone;
   private String id;
+  private double balance;
   private static final String Client_STRING = "M";
   private shoppingCart cart = new shoppingCart();
   public  Client (String name, String address, String phone) {
@@ -13,6 +14,7 @@ public class Client implements Serializable {
     this.address = address;
     this.phone = phone;
     id = Client_STRING + (ClientIdServer.instance()).getId();
+    balance = 0.0;
   }
 
   public String getName() {
@@ -38,6 +40,43 @@ public class Client implements Serializable {
   }
   public void setPhone(String newPhone) {
     phone = newPhone;
+  }
+  public Transaction processOrder() {
+    /* Initialize a Transaction for an order */
+    Transaction tran = new Transaction(new Date().toString(), "", 0.00);
+    /* get cart contents */
+    Iterator<CartItem> iter = cart.getProducts();
+    while (iter.hasNext()) {
+      /* get the item from cart */
+      CartItem item = iter.next();
+      Product prod = item.getProduct();
+      int order_qty = item.getQuantity();
+      /* place an order for the item */
+      if (order_qty > 0) {
+        int shipped_qty = prod.orderProduct(this.id, order_qty);
+        /* add shipped order to transaction */
+        tran.addItemOrder(prod.getId(), shipped_qty, prod.getPrice());
+      }
+    }
+    /* only go through with transaction if something was actually ordered */
+    double total = tran.getTotal();
+    if (total > 0.0) { // proper order
+      /* charge to client account */
+      charge2Account(total);
+      /* add transaction to list */
+      addTransaction(tran);
+      /* empty cart contents */
+      cart.emptyContents();
+      return tran;
+    } else { // bad order
+      return null;
+    }
+  }
+  private void charge2Account(double amt) {
+    this.balance += amt;
+  }
+  private void addTransaction(Transaction t) {
+    /* dummy */
   }
   public boolean equals(String id) {
     return this.id.equals(id);

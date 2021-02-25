@@ -20,6 +20,10 @@ public class shoppingCart implements Serializable {
     return products.iterator();
   }
 
+  public void emptyContents() {
+    /* dummy */
+  }
+
   private void writeObject(java.io.ObjectOutputStream output) {
     try {
       output.defaultWriteObject();
