@@ -28,7 +28,7 @@ public class Client implements Serializable {
     return id;
   }
   public shoppingCart getShoppingCart() {
-          return cart;
+    return cart;
   }
   public void setName(String newName) {
     name = newName;
