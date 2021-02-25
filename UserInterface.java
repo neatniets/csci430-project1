@@ -21,6 +21,7 @@ public class UserInterface {
   private static final int ADD_ITEM_TO_THE_SHOPPING_CART = 13;
   private static final int PRINT_A_CLIENTS_SHOPPING_CART = 14;
   private static final int PROCESS_ORDER = 15;
+  private static final int LIST_PRODUCTS_W_WAITLIST = 16;
   private static final int HELP = 18;
   
   //Constructor
@@ -375,6 +376,16 @@ public class UserInterface {
     }
   }
 
+  public void ListProductsWithWaitlist() {
+    Iterator<Product> iter = warehouse.getProducts();
+    while (iter.hasNext()) {
+      Product p = iter.next();
+      if (p.hasWaitlist()) {
+        System.out.println(p.getId());
+      }
+    }
+  }
+
   //Function to invoke the suitable functions according to the user's choice.
   public void process() {
     int command;
@@ -411,6 +422,9 @@ public class UserInterface {
                                 break;
         case PROCESS_ORDER:
           ProcessOrder();
+          break;
+        case LIST_PRODUCTS_W_WAITLIST:
+          ListProductsWithWaitlist();
           break;
         case HELP:                                            help();
                                 break;
