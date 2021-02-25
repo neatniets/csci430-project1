@@ -74,7 +74,7 @@ public class Warehouse implements Serializable {
                 if (p == null) { // no product found
                         return null;
                 }
-                p.set_price(price);
+                p.setPrice(price);
                 return p;
         }
 

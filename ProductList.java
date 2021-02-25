@@ -22,10 +22,10 @@ public class ProductList {
          * @post        list will be unchanged if this returns false
          * @return      false if preconditions are failed, true otherwise */
         public boolean add(Product prod) {
-                if (map.containsKey(prod.get_id())) {
+                if (map.containsKey(prod.getId())) {
                         return false;
                 } else {
-                        map.put(prod.get_id(), prod);
+                        map.put(prod.getId(), prod);
                         return true;
                 }
         }
