@@ -44,3 +44,6 @@ SupplierList.class: SupplierList.java Supplier.class
 
 Supplier.class: Supplier.java
 	$(JC) $<
+
+Transaction.class: Transaction.java
+	$(JC) $<
