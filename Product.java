@@ -107,6 +107,40 @@ public class Product {
                 }
         }
 
+        /** Place an order for this product. 
+         * The stock will be decreased by as much of the ordering quantity as
+         * possible. If the ordering quantity is higher than what is in stock,
+         * the remaining amount will be added to the waitlist for that client.
+         * @param[in]   client_id       client that is ordering
+         * @param[in]   qty2order       amount of this item to order
+         * @pre         qty2order > 0
+         * @pre         there exists a client w/ client_id
+         * @post        the waitlist will be modified, if necessary
+         * @return      the amount immediately shipped from stock */
+        public int orderProduct(String client_id,
+                                int qty2order) {
+                /* attempt to order the full amount */
+                if (decreaseQuantity(qty2order)) { // success
+                        return qty2order;
+                } // fail
+                /* get the current stock and order that much */
+                int stock = getQuantity();
+                decreaseQuantity(stock);
+                /* try to find a waitlist entry for the client */
+                WaitlistEntry entry = getWaitlistEntry(client_id);
+                if (entry == null) { // not found
+                        /* create the entry & add it */
+                        entry = new WaitlistEntry(getId(), client_id,
+                                                  qty2order - stock);
+                        addWaitlistEntry(entry);
+                } else { // found
+                        /* add to existing entry */
+                        entry.increaseQuantity(qty2order - stock);
+                }
+                /* return ordered quantity */
+                return stock;
+        }
+
         /** Get an iterator for the waitlist of this product. */
         public Iterator<WaitlistEntry> getWaitlist() {
                 return waitlist.values().iterator();
