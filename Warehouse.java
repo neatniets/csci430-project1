@@ -123,6 +123,15 @@ public class Warehouse implements Serializable {
           }
         }
 
+        public Iterator<WaitlistEntry> getWaitlist(String prod_id) {
+          Product p = plist.find(prod_id);
+          if (p == null) {
+            return null;
+          } else {
+            return p.getWaitlist();
+          }
+        }
+
         /* Matt got a working ID generator */
         public Client addClient(String name,
                                 String address,
