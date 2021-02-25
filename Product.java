@@ -2,7 +2,6 @@
 public class Product {
         private int id;         //!< unique identifier
         private String name;    //!< name of Product
-        private String desc;    //!< optional extra details
         private double price;   //!< warehouse sale price
         private int quantity;   //!< quantity in stock in the warehouse
 
@@ -10,28 +9,23 @@ public class Product {
          * @param[in]   id      unique identifier for this Product
          * @pre         id MUST be unique
          * @param[in]   name    name of Product
-         * @param[in]   desc    extra details to describe Product
          * @post        price and quantity are set to 0 */
         public Product(int id,
-                       String name,
-                       String desc) {
-                this(id, name, desc, 0.0, 0);
+                       String name) {
+                this(id, name, 0.0, 0);
         }
         /** Construct a new Product.
          * @param[in]   id              unique identifier for this Product
          * @pre         id MUST be unique
          * @param[in]   name            name of Product
-         * @param[in]   desc            extra details to describe Product
          * @param[in]   price           price of product
          * @param[in]   quantity        quantity of product */
         public Product(int id,
                        String name,
-                       String desc,
                        double price,
                        int quantity) {
                 this.id = id;
                 this.name = name;
-                this.desc = desc;
                 this.price = price;
                 this.quantity = quantity;
         }
@@ -46,12 +40,6 @@ public class Product {
          * @return      Product name string */
         public String get_name() {
                 return name;
-        }
-
-        /** Obtain the description of the Product.
-         * @return      Product description string */
-        public String get_desc() {
-                return desc;
         }
 
         /** Obtain the warehouse sale price of the Product.
@@ -71,14 +59,6 @@ public class Product {
          * @return      always returns true */
         public boolean set_name(String new_name) {
                 name = new_name;
-                return true;
-        }
-
-        /** Modify the description of the Product.
-         * @param[in]   new_desc        string of new description for Product
-         * @return      always returns true */
-        public boolean set_desc(String new_desc) {
-                desc = new_desc;
                 return true;
         }
 
@@ -128,7 +108,7 @@ public class Product {
          * @return      the string */
         public String toString() {
                 return "ID: " + get_id() + "\nName: " + get_name()
-                       + "\nDescription: " + get_desc() + "\nPrice: "
-                       + get_price() + "\nQuantity: " + get_quantity() + "\n";
+                       + "\nPrice: " + get_price() + "\nQuantity: "
+                       + get_quantity() + "\n";
         }
 }

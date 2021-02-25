@@ -41,7 +41,7 @@ public class Warehouse implements Serializable {
                                   double price,
                                   int quantity) {
                 /* create product */
-                Product p = new Product(product_id, name, "", price, quantity);
+                Product p = new Product(product_id, name, price, quantity);
                 /* add product */
                 if (plist.add(p)) { // success
                         return p;

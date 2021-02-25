@@ -1,11 +1,11 @@
 import java.util.Iterator;
 public class Product_tester {
         public static void main(String[] args) {
-                Product milk1 = new Product(3, "milk", "skim");
-                Product milk2 = new Product(1, "milk", "2%");
-                Product chocolate = new Product(2, "chocolate", "dark");
+                Product milk1 = new Product(3, "milk");
+                Product milk2 = new Product(1, "milk");
+                Product chocolate = new Product(2, "chocolate");
                 /* intentionally uses the same ID as milk1 to show error */
-                Product eggs = new Product(3, "eggs", "1 dozen");
+                Product eggs = new Product(3, "eggs");
 
                 System.out.println("Printing all Products.");
                 System.out.print("milk1:\n" + milk1
