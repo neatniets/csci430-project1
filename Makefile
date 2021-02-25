@@ -1,6 +1,5 @@
 .PHONY: all clean
 OBJS := $(patsubst %.java, %.class, $(wildcard *.java))
-OBJS := $(filter-out Product_tester.class, $(OBJS))
 JAVAC := javac
 
 all: $(OBJS)
@@ -8,8 +7,7 @@ all: $(OBJS)
 clean:
 	-rm *.class
 
-Product_tester.class: %.class: %.java
-	$(JAVAC) $<
+UserInterface.class: $(OBJS)
 
 $(OBJS): %.class: %.java
 	$(JAVAC) $<
