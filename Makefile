@@ -5,7 +5,7 @@ JC := javac
 all: $(OBJS)
 
 clean:
-	-rm *.class
+	-rm $(OBJS)
 
 UserInterface.class: UserInterface.java Warehouse.class Product.class \
 	Supplier.class Client.class Transaction.class WaitlistEntry.class
