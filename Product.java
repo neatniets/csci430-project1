@@ -12,6 +12,9 @@ public class Product {
         /** A list of clients waiting for this product; may contain entries
          * which have a quantity of 0 */
         private TreeMap<String, WaitlistEntry> waitlist;
+        /** A list of supply objects which identify a Product sold by a
+         * Supplier at a certain price. Sorted by Supplier ID. */
+        private TreeMap<String, Supply> supplyList;
 
         /** Construct a new Product.
          * @param[in]   name    name of Product
@@ -107,7 +110,7 @@ public class Product {
                 }
         }
 
-        /** Place an order for this product. 
+        /** Place an order for this product.
          * The stock will be decreased by as much of the ordering quantity as
          * possible. If the ordering quantity is higher than what is in stock,
          * the remaining amount will be added to the waitlist for that client.
@@ -176,6 +179,14 @@ public class Product {
                 }
                 /* no entries with qty > 0 */
                 return false;
+        }
+
+        public Iterator<Supplier> getSuppliersOfProduct() {
+                // TODO: Matt
+        }
+
+        public void addSupplytoList() {
+                // TODO: Matt
         }
 
         /** Create a string representing the Product object.
