@@ -1,3 +1,6 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Transaction {
   private String date;
   private String desc;
@@ -22,9 +25,19 @@ public class Transaction {
 
   public void addItemOrder(String prod_id, int qty, double price_per) {
     double tot = qty * price_per;
+    /* round the total to 2 decimal places */
+    BigDecimal bd = new BigDecimal(Double.toString(tot));
+    bd = bd.setScale(2, RoundingMode.HALF_UP);
+    tot = bd.doubleValue();
+
     desc += prod_id + " x " + qty + " @ $" + price_per + "/unit = $" + tot
             + "\n";
+
     amt += tot;
+    /* round the other total to 2 decimal places */
+    bd = new BigDecimal(Double.toString(amt));
+    bd = bd.setScale(2, RoundingMode.HALF_UP);
+    amt = bd.doubleValue();
   }
 
   public String toString() {
