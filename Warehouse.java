@@ -96,12 +96,11 @@ public class Warehouse implements Serializable {
                 product.addSupplytoList(supply);
         }
 
-        public Supplier addSupplier(int supplier_id,
-                                    String name,
+        public Supplier addSupplier(String name,
                                     String address,
-                                    int phone) {
+                                    String phone) {
                 /* create supplier */
-                Supplier s = new Supplier(name, address, phone, supplier_id);
+                Supplier s = new Supplier(name, address, phone);
                 /* add supplier */
                 if (slist.add(s)) { // success
                         return s;
@@ -112,13 +111,13 @@ public class Warehouse implements Serializable {
         public Iterator<Supplier> getSuppliers() {
                 return slist.iterator();
         }
-        public Supplier getSupplier(int sid) {
+        public Supplier getSupplier(String sid) {
                 return slist.find(sid);
         }
-        public Supplier updateSupplierInfo(int sid,
+        public Supplier updateSupplierInfo(String sid,
                                            String name,
                                            String address,
-                                           int phone) {
+                                           String phone) {
                 /* try to find supplier */
                 Supplier s = slist.find(sid);
                 if (s == null) { // no supplier found
@@ -185,7 +184,8 @@ public class Warehouse implements Serializable {
         }
 
         public boolean add2ShoppingCart(String client_id,
-                                        String product_id) {
+                                        String product_id,
+                                        int quantity) {
                 /* find client */
                 Client c = clist.getClient(client_id);
                 if (c == null) { // client not found
@@ -197,9 +197,9 @@ public class Warehouse implements Serializable {
                         return false;
                 }
                 /* add product to cart */
-                return c.getShoppingCart().insertProduct(p);
+                return c.getShoppingCart().insertProduct(p, quantity);
         }
-        public Iterator<Product> getCartContents(String client_id) {
+        public Iterator<CartItem> getCartContents(String client_id) {
                 /* try to find client */
                 Client c = clist.getClient(client_id);
                 if (c == null) { // client not found

@@ -172,12 +172,11 @@ public class UserInterface {
   
   //Function to add a Supplier to the warehouse.
   public void addSupplier() {
-   int supplierid = Integer.parseInt(getToken("Enter supplier ID:"));
 	  String name = getToken("Enter Supplier's name:");
 	  String address = getToken("Enter address:");
-	  int phone = Integer.parseInt(getToken("Enter phone:"));
+	  String phone = getToken("Enter phone:");
 	  Supplier result;
-	  result = warehouse.addSupplier(supplierid, name, address, phone);
+	  result = warehouse.addSupplier(name, address, phone);
 	  if (result == null) {
 	    System.out.println("Could not add Supplier.");
 	  }
@@ -215,7 +214,7 @@ public class UserInterface {
 
   public void PrintSupplierInformation() {
     Supplier result;
-      int id = Integer.parseInt(getToken("enter suppliers id:"));
+      String id = getToken("enter suppliers id:");
       result = warehouse.getSupplier(id);
       if (result != null){
         System.out.println(result);
@@ -291,7 +290,7 @@ public class UserInterface {
 
   public void UpdateSuppliersInformation() {
     /* request ID */
-    int id = Integer.parseInt(getToken("Supplier ID: "));
+    String id = getToken("Supplier ID: ");
     /* find supplier */
     Supplier result = warehouse.getSupplier(id);
     if (result != null){ // success
@@ -305,7 +304,7 @@ public class UserInterface {
     /* ask for what changes are desired */
     String name;
     String address;
-    int phone;
+    String phone;
     if (yesOrNo("Change name?")) {
       name = getToken("New name: ");
     } else {
@@ -317,7 +316,7 @@ public class UserInterface {
       address = result.getAddress();
     }
     if (yesOrNo("Change phone?")) {
-      phone = Integer.parseInt(getToken("New phone: "));
+      phone = getToken("New phone: ");
     } else {
       phone = result.getPhone();
     }
@@ -354,7 +353,8 @@ public class UserInterface {
   public void AddItemToShoppingCart() {
     String client_id = getToken("Client ID: ");
     String product_id = getToken("Product ID: ");
-    if (warehouse.add2ShoppingCart(client_id, product_id)) {
+    int quantity = Integer.parseInt(getToken("Quantity: "));
+    if (warehouse.add2ShoppingCart(client_id, product_id, quantity)) {
       System.out.println("Successfully added to cart.");
     } else {
       System.out.println("Invalid request.");
@@ -364,14 +364,18 @@ public class UserInterface {
   public void PrintClientsShoppingCart() {
     String id = getToken("Client ID: ");
     /* get client's cart contents */
-    Iterator<Product> iter = warehouse.getCartContents(id);
+    Iterator<CartItem> iter = warehouse.getCartContents(id);
     if (iter == null) { // client not found
       System.out.println("Client not found");
       return;
     }
     /* print contents */
+    System.out.println("ID\t" + "Name\t" + "Quantity");
     while (iter.hasNext()) {
-      System.out.print(iter.next().getName() + " ");
+      CartItem item = iter.next();
+      Product p = item.getProduct();
+      System.out.println(p.getId() + "\t" + p.getName() + "\t"
+                         + item.getQuantity());
     }
     System.out.println();
   }
