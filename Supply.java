@@ -3,10 +3,7 @@ public class Supply {
 	private String product_id;
 	private double price;
 	
-	public void Supply(){
-	}
-	
-	public void Supply(String supplier_id, String product_id, double price){
+	public Supply(String supplier_id, String product_id, double price){
 		this.supplier_id = supplier_id;
 		this.product_id = product_id;
 		this.price = price;
