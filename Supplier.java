@@ -1,11 +1,22 @@
-
+import java.util.LinkedList;
+import java.util.Iterator;
 public class Supplier {
   
   private String name;
   private String address;
   private int phone;
   private int id;
-  public  Supplier (String name, String address, int phone, int id) {
+  private LinkedList productsSold = new LinkedList();
+
+  public boolean insertProductSold(Supply supply) {
+    productsSold.add(supply);
+    return true;
+  }
+  public Iterator getProductsSold(){
+     return productsSold.iterator();
+  }
+
+  public Supplier (String name, String address, int phone, int id) {
     this.name = name;
     this.address = address;
     this.phone = phone;
