@@ -23,7 +23,10 @@ public class UserInterface {
   private static final int PROCESS_ORDER = 15;
   private static final int LIST_PRODUCTS_W_WAITLIST = 16;
   private static final int PRINT_WAITLIST = 17;
-  private static final int HELP = 18;
+  private static final int PRINT_SUPPLIERS_OF_PRODUCT = 18;
+  private static final int PRINT_A_SUPPLIERS_PRODUCTS = 19;
+  private static final int ADD_PRODUCT_TO_SUPPLIER = 20;
+  private static final int HELP = 21;
   
   //Constructor
   private UserInterface() {
@@ -112,14 +115,20 @@ public class UserInterface {
     System.out.println(LIST_ALL_PRODUCTS + " to print a list of all the products.");
     System.out.println(LIST_ALL_SUPPLIERS + " to print a list of all the suppliers.");
     System.out.println(LIST_ALL_CLIENTS + " to print a list of all the clients. ");
-    System.out.println(PRINT_SUPPLIER_PERSONAL_INFORMATION + " to print a spuuliers personal information.");
-    System.out.println(PRINT_SPECIFIC_CLIENTS_PERSONAL_INFORMATION + " to print a clients personal information.");
-    System.out.println(PRINT_INFORMATION_ON_SPECIFIC_PRODUCT + " to print a products information.");
-    System.out.println(UPTADE_CLIENTS_PERSONAL_INFORMATION + " to update a clients personal information.");
-    System.out.println(UPDTE_SUPPLIERS_PERSONAL_INFORMATION + " to update a spuuliers personal information.");
+    System.out.println(PRINT_SUPPLIER_PERSONAL_INFORMATION + " to print a supplier's personal information.");
+    System.out.println(PRINT_SPECIFIC_CLIENTS_PERSONAL_INFORMATION + " to print a client's personal information.");
+    System.out.println(PRINT_INFORMATION_ON_SPECIFIC_PRODUCT + " to print a product's information.");
+    System.out.println(UPTADE_CLIENTS_PERSONAL_INFORMATION + " to update a client's personal information.");
+    System.out.println(UPDTE_SUPPLIERS_PERSONAL_INFORMATION + " to update a supplier's personal information.");
     System.out.println(UPDATE_PRODUCTS_PRICE + " to update price of a product.");
     System.out.println(ADD_ITEM_TO_THE_SHOPPING_CART + " to add an item to the shopping cart.");
-    System.out.println(PRINT_A_CLIENTS_SHOPPING_CART + " to print a clients shopping cart");
+    System.out.println(PRINT_A_CLIENTS_SHOPPING_CART + " to print a client's shopping cart");
+    System.out.println(PROCESS_ORDER + " to place an order w/ shopping cart.");
+    System.out.println(LIST_PRODUCTS_W_WAITLIST + " to list all products that clients are waiting on.");
+    System.out.println(PRINT_WAITLIST + " to print the waitlist for a product.");
+	System.out.println(PRINT_SUPPLIERS_OF_PRODUCT + "to print all the suppliers of a product");
+	System.out.println(PRINT_A_SUPPLIERS_PRODUCTS + "to print all of a supplier's products");
+	System.out.println(ADD_PRODUCT_TO_SUPPLIER + "to add a product a supplier sells");
     System.out.println(HELP + " for help menu.");
   }
 
@@ -397,50 +406,84 @@ public class UserInterface {
     }
   }
 
+  public void PrintSuppliersOfProduct() {
+	  String id = getToken("Product ID: ");
+	  Iterator<Supply> iter = warehouse.getSuppliersForProduct(id);
+	  while (iter.hasNext()) {
+		  Supply supply = iter.next();
+		  System.out.print("Supplier ID: " + supply.getSupplierID() + "\n"
+							+ "Supplier Name: " + warehouse.getSupplier(supply.getSupplierID()).getName() + "\n");
+	  }
+	 }
+  
+  
+  public void PrintSuppliersProducts() {
+	  String id = getToken("Supplier ID: ");
+	  Iterator<Supply> iter = warehouse.getSuppliersProducts(id);
+	  while (iter.hasNext()) {
+		Supply supply = iter.next();
+                Product product = warehouse.getProduct(supply.getProductID());
+		System.out.print("Product ID: " + supply.getProductID() + "\n"
+                       + "Name: " + product.getName() + "\n"
+					   + "Price: " + product.getPrice() + "\n"
+					   + "Quantity: " + product.getQuantity() + "\n");
+	  }
+	 }
+
+  public void addSupplierProduct() {
+	  String sid = getToken("Supplier ID: ");
+          String pid = getToken("Product ID: ");
+          double price = Double.parseDouble(getToken("Price: "));
+	  warehouse.addSupply(pid, sid, price);
+	 }
+
   //Function to invoke the suitable functions according to the user's choice.
   public void process() {
     int command;
     help();
     while ((command = getCommand()) != EXIT) {
       switch (command) {
-        case ADD_CLIENT:                                  addClient();
+        case ADD_CLIENT:                                    addClient();
                                 break;
-        case ADD_PRODUCT:                                 addProduct();
+        case ADD_PRODUCT:                                   addProduct();
         						break;
-        case ADD_SUPPLIER:                                addSupplier();
+        case ADD_SUPPLIER:                                  addSupplier();
                                 break;
-        case LIST_ALL_PRODUCTS:                           ListAllProducts();
+        case LIST_ALL_PRODUCTS:                             ListAllProducts();
                                 break;
-        case LIST_ALL_SUPPLIERS:                           ListAllSuppliers();
+        case LIST_ALL_SUPPLIERS:                            ListAllSuppliers();
                                 break;
-        case LIST_ALL_CLIENTS:                             ListAllClients();
+        case LIST_ALL_CLIENTS:                              ListAllClients();
                                 break;
-        case PRINT_SUPPLIER_PERSONAL_INFORMATION:          PrintSupplierInformation();
+        case PRINT_SUPPLIER_PERSONAL_INFORMATION:           PrintSupplierInformation();
                                 break;
         case PRINT_SPECIFIC_CLIENTS_PERSONAL_INFORMATION:   PrintSpecificClientsInfo();
                                 break;
-        case PRINT_INFORMATION_ON_SPECIFIC_PRODUCT:          PrintInfoAboutSpecificProduct();
+        case PRINT_INFORMATION_ON_SPECIFIC_PRODUCT:         PrintInfoAboutSpecificProduct();
                                 break;
-        case UPTADE_CLIENTS_PERSONAL_INFORMATION:            UpdateClientsInformation();
+        case UPTADE_CLIENTS_PERSONAL_INFORMATION:           UpdateClientsInformation();
                                 break;
-        case UPDTE_SUPPLIERS_PERSONAL_INFORMATION:            UpdateSuppliersInformation();
+        case UPDTE_SUPPLIERS_PERSONAL_INFORMATION:          UpdateSuppliersInformation();
                                 break;
-        case UPDATE_PRODUCTS_PRICE:                           UpdateProductsPrice();
+        case UPDATE_PRODUCTS_PRICE:                         UpdateProductsPrice();
                                 break;
-        case ADD_ITEM_TO_THE_SHOPPING_CART:                   AddItemToShoppingCart();
+        case ADD_ITEM_TO_THE_SHOPPING_CART:                 AddItemToShoppingCart();
                                 break;
-        case PRINT_A_CLIENTS_SHOPPING_CART:                   PrintClientsShoppingCart();
+        case PRINT_A_CLIENTS_SHOPPING_CART:                 PrintClientsShoppingCart();
                                 break;
-        case PROCESS_ORDER:
-          ProcessOrder();
-          break;
-        case LIST_PRODUCTS_W_WAITLIST:
-          ListProductsWithWaitlist();
-          break;
-        case PRINT_WAITLIST:
-          PrintWaitlist();
-          break;
-        case HELP:                                            help();
+        case PROCESS_ORDER:									ProcessOrder();
+								break;
+        case LIST_PRODUCTS_W_WAITLIST:						ListProductsWithWaitlist();
+								break;
+        case PRINT_WAITLIST:								PrintWaitlist();
+								break;
+		case PRINT_SUPPLIERS_OF_PRODUCT:					PrintSuppliersOfProduct();
+								break;
+		case PRINT_A_SUPPLIERS_PRODUCTS:					PrintSuppliersProducts();
+								break;
+		case ADD_PRODUCT_TO_SUPPLIER:						addSupplierProduct();
+								break;
+        case HELP:                                          help();
                                 break;
 
       }
