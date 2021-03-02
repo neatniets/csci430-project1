@@ -1,13 +1,13 @@
 import java.util.*;
 import java.io.*;
   public class CartItem {
-  private String quantity;
+  private int quantity;
   private Product product;
-  public CartItem(Product product, String quantity) {
+  public CartItem(Product product, int quantity) {
     this.product = product;
     this.quantity = quantity;
   }
-  public String getQuantity() {
+  public int getQuantity() {
     return quantity;
   }
 
@@ -15,7 +15,7 @@ import java.io.*;
     return product;
   }
 
-  public void setQuantity(String newquantity) {
+  public void setQuantity(int newquantity) {
     quantity = newquantity;
   }
   public void setproductid(Product new_product) {
