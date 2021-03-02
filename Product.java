@@ -181,11 +181,12 @@ public class Product {
                 return false;
         }
 
-        public Iterator<Supplier> getSuppliersOfProduct() {
+        public Iterator<Supply> getSuppliersOfProduct() {
                 // TODO: Matt
+                return null;
         }
 
-        public void addSupplytoList() {
+        public void addSupplytoList(Supply supply) {
                 // TODO: Matt
         }
 
