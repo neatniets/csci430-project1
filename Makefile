@@ -8,18 +8,20 @@ clean:
 	-rm $(OBJS)
 
 UserInterface.class: UserInterface.java Warehouse.class Product.class \
-	Supplier.class Client.class Transaction.class WaitlistEntry.class
+	Supplier.class Client.class Transaction.class WaitlistEntry.class \
+	Supply.class
 	$(JC) $<
 
 Warehouse.class: Warehouse.java ProductList.class Product.class Client.class \
 	Supplier.class ClientList.class SupplierList.class shoppingCart.class \
-	Transaction.class WaitlistEntry.class
+	Transaction.class WaitlistEntry.class Supply.class
 	$(JC) $<
 
 ProductList.class: ProductList.java Product.class
 	$(JC) $<
 
-Product.class: Product.java WaitlistEntry.class ProductIdServer.class
+Product.class: Product.java WaitlistEntry.class ProductIdServer.class \
+	Supply.class
 	$(JC) $<
 
 ProductIdServer.class: ProductIdServer.java
@@ -44,11 +46,20 @@ shoppingCart.class: shoppingCart.java CartItem.class
 SupplierList.class: SupplierList.java Supplier.class
 	$(JC) $<
 
-Supplier.class: Supplier.java
+Supplier.class: Supplier.java SupplierIdServer.class Supply.class
 	$(JC) $<
 
-Transaction.class: Transaction.java
+SupplierIdServer.class: %.class: %.java
+	$(JC) $<
+
+Transaction.class: Transaction.java TransactionIdServer.class
+	$(JC) $<
+
+TransactionIdServer.class: %.class: %.java
 	$(JC) $<
 
 CartItem.class: CartItem.java
+	$(JC) $<
+
+Supply.class: Supply.java
 	$(JC) $<
