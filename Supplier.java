@@ -1,12 +1,13 @@
 import java.util.LinkedList;
 import java.util.Iterator;
 public class Supplier {
-  
+  private static final long serialVersionUID = 1L;
   private String name;
   private String address;
-  private int phone;
-  private int id;
-  private LinkedList productsSold = new LinkedList();
+  private String phone;
+  private String id;
+  private static final String SUPPLIER_STRING = "S";
+  private LinkedList<Supply> productsSold = new LinkedList<Supply>();
 
   public boolean insertProductSold(Supply supply) {
     productsSold.add(supply);
@@ -16,45 +17,44 @@ public class Supplier {
      return productsSold.iterator();
   }
 
-  public Supplier (String name, String address, int phone, int id) {
+  public  Supplier (String name, String address, String phone) {
     this.name = name;
     this.address = address;
     this.phone = phone;
-    this.id = id;
+    id = SUPPLIER_STRING + (SupplierIdServer.instance()).getId();
   }
-
   public String getName() {
     return name;
   }
-  public int getPhone() {
+  public String getPhone() {
     return phone;
   }
   public String getAddress() {
     return address;
   }
-  public int getId() {
+  public String getId() {
     return id;
   }
- 
 //to change the name of the supplier
   public boolean setName(String newName) {
     name = newName;
     return true;
   }
-//to change the address of the supplier    
+//to change the address of the supplier
   public boolean setAddress(String newAddress) {
     address = newAddress;
     return true;
   }
 //to change the phone number of supplier
-  public boolean setPhone(int newPhone) {
+  public boolean setPhone(String newPhone) {
     phone = newPhone;
     return true;
   }
- 
-
+  public boolean equals(String id){
+    return this.id.equals(id);
+  }
   public String toString() {
     return "ID:" + getId() + "\nSupplier name: " + getName() + "\naddress " + getAddress()+ "\nphone " + getPhone();
-   
+
   }
 }
