@@ -91,6 +91,6 @@ public class shoppingCart implements Serializable {
     }*/
   }
   public String toString() {
-    return products.toString();
+    return contents.toString();
   }
 }
