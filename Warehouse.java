@@ -78,6 +78,24 @@ public class Warehouse implements Serializable {
                 return p;
         }
 
+        public Iterator<Supply> getSuppliersForProduct(String pid) {
+                Product product = plist.find(pid);
+                return product.getSuppliersOfProduct();
+        }
+
+        public Iterator<Supply> getSuppliersProducts(String sid) {
+                Supplier supplier = slist.find(sid);
+                return supplier.getProductsSold();
+        }
+
+        public void addSupply(String pid, String sid, double price) {
+                Product product = plist.find(pid);
+                Supplier supplier = slist.find(sid);
+                Supply supply = new Supply(sid, pid, price);
+                supplier.insertProductSold(supply);
+                product.addSupplytoList(supply);
+        }
+
         public Supplier addSupplier(int supplier_id,
                                     String name,
                                     String address,
