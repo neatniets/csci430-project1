@@ -86,6 +86,16 @@ public class Client implements Serializable {
 	return true;
   }
 
+  public boolean OutStandingBalance(){
+    if(balance>0){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }
+
   public Iterator getTransactionList() {
     return transactionList.iterator();
   }
