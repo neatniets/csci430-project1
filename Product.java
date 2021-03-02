@@ -1,4 +1,5 @@
 import java.util.TreeMap;
+import java.util.LinkedList;
 import java.util.Iterator;
 
 /** Represents a Product that the warehouse stocks. */
@@ -12,10 +13,8 @@ public class Product {
         /** A list of clients waiting for this product; may contain entries
          * which have a quantity of 0 */
         private TreeMap<String, WaitlistEntry> waitlist;
-        /** A list of supply objects which identify a Product sold by a
-         * Supplier at a certain price. Sorted by Supplier ID. */
-        private TreeMap<String, Supply> supplyList;
-
+        private LinkedList<Supply> supplyList;
+	
         /** Construct a new Product.
          * @param[in]   name    name of Product
          * @post        price and quantity are set to 0 */
@@ -34,6 +33,7 @@ public class Product {
                 this.price = price;
                 this.quantity = quantity;
                 waitlist = new TreeMap<String, WaitlistEntry>();
+                supplyList = new LinkedList<Supply>();
         }
 
         /** Obtain the unique identifier describing this Product .
@@ -110,7 +110,7 @@ public class Product {
                 }
         }
 
-        /** Place an order for this product.
+        /** Place an order for this product. 
          * The stock will be decreased by as much of the ordering quantity as
          * possible. If the ordering quantity is higher than what is in stock,
          * the remaining amount will be added to the waitlist for that client.
@@ -180,15 +180,16 @@ public class Product {
                 /* no entries with qty > 0 */
                 return false;
         }
-
-        public Iterator<Supply> getSuppliersOfProduct() {
-                // TODO: Matt
-                return null;
-        }
-
-        public void addSupplytoList(Supply supply) {
-                // TODO: Matt
-        }
+		
+	public Iterator<Supply> getSuppliersOfProduct() {
+            return supplyList.iterator();
+	}
+		
+	public boolean addSupplytoList(Supply supply) {
+              supplyList.add(supply);
+              return true;
+	}
+		
 
         /** Create a string representing the Product object.
          * @return      the string */
