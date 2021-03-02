@@ -1,5 +1,8 @@
 import java.util.*;
 import java.io.*;
+import java.util.TreeMap;
+import java.util.Iterator;
+
 public class Client implements Serializable {
   private static final long serialVersionUID = 1L;
   private String name;
@@ -9,12 +12,15 @@ public class Client implements Serializable {
   private double balance;
   private static final String Client_STRING = "M";
   private shoppingCart cart = new shoppingCart();
+  private List transactionList;
+
   public  Client (String name, String address, String phone) {
     this.name = name;
     this.address = address;
     this.phone = phone;
     id = Client_STRING + (ClientIdServer.instance()).getId();
     balance = 0.0;
+	List transactionList = new LinkedList<Transaction>();
   }
 
   public String getName() {
@@ -75,9 +81,15 @@ public class Client implements Serializable {
   private void charge2Account(double amt) {
     this.balance += amt;
   }
-  private void addTransaction(Transaction t) {
-    /* dummy */
+  private boolean addTransaction(Transaction t) {
+	transactionList.add(t); 
+	return true;
   }
+
+  public Iterator getTransactionList() {
+    return transactionList.iterator();
+  }
+  
   public boolean equals(String id) {
     return this.id.equals(id);
   }
