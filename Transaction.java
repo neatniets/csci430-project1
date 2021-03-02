@@ -26,4 +26,11 @@ public class Transaction {
             + "\n";
     amt += tot;
   }
+
+  public String toString() {
+    return "Date: " + date + "\n"
+           + "Total: " + amt + "\n"
+           + "Description:\n"
+           + desc;
+  }
 }
