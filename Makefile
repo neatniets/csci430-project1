@@ -40,7 +40,7 @@ Client.class: Client.java shoppingCart.class ClientIdServer.class \
 ClientIdServer.class: ClientIdServer.java
 	$(JC) $<
 
-shoppingCart.class: shoppingCart.java CartItem.class
+shoppingCart.class: shoppingCart.java CartItem.class Product.class
 	$(JC) $<
 
 SupplierList.class: SupplierList.java Supplier.class
@@ -58,7 +58,7 @@ Transaction.class: Transaction.java TransactionIdServer.class
 TransactionIdServer.class: %.class: %.java
 	$(JC) $<
 
-CartItem.class: CartItem.java
+CartItem.class: CartItem.java Product.class
 	$(JC) $<
 
 Supply.class: Supply.java
