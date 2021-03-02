@@ -12,7 +12,7 @@ public class Client implements Serializable {
   private double balance;
   private static final String Client_STRING = "M";
   private shoppingCart cart = new shoppingCart();
-  private List transactionList;
+  private LinkedList<Transaction> transactionList;
 
   public  Client (String name, String address, String phone) {
     this.name = name;
@@ -20,7 +20,7 @@ public class Client implements Serializable {
     this.phone = phone;
     id = Client_STRING + (ClientIdServer.instance()).getId();
     balance = 0.0;
-	List transactionList = new LinkedList<Transaction>();
+	transactionList = new LinkedList<Transaction>();
   }
 
   public String getName() {
