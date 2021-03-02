@@ -416,7 +416,8 @@ public class UserInterface {
 	  while (iter.hasNext()) {
 		  Supply supply = iter.next();
 		  System.out.print("Supplier ID: " + supply.getSupplierID() + "\n"
-							+ "Supplier Name: " + warehouse.getSupplier(supply.getSupplierID()).getName() + "\n");
+					+ "Supplier Name: " + warehouse.getSupplier(supply.getSupplierID()).getName() + "\n"
+					+ "Supplier's Price: $" + supply.getPrice() + "\n");
 	  }
 	 }
   
@@ -429,8 +430,7 @@ public class UserInterface {
                 Product product = warehouse.getProduct(supply.getProductID());
 		System.out.print("Product ID: " + supply.getProductID() + "\n"
                        + "Name: " + product.getName() + "\n"
-					   + "Price: " + product.getPrice() + "\n"
-					   + "Quantity: " + product.getQuantity() + "\n");
+		       + "Supplier's Price: $" + supply.getPrice() + "\n");
 	  }
 	 }
 
