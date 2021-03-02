@@ -61,7 +61,9 @@ public class Client implements Serializable {
       if (order_qty > 0) {
         int shipped_qty = prod.orderProduct(this.id, order_qty);
         /* add shipped order to transaction */
-        tran.addItemOrder(prod.getId(), shipped_qty, prod.getPrice());
+        if (shipped_qty > 0) {
+          tran.addItemOrder(prod.getId(), shipped_qty, prod.getPrice());
+        }
       }
     }
     /* only go through with transaction if something was actually ordered */
