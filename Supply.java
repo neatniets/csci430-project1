@@ -20,4 +20,8 @@ public class Supply {
 	public double getPrice(){
 		return price;
 	}
+
+	public void setPrice(double new_price) {
+		price = new_price;
+	}
 }

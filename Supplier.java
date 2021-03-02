@@ -13,11 +13,36 @@ public class Supplier {
     productsSold.add(supply);
     return true;
   }
-  public Iterator getProductsSold(){
+  public Iterator<Supply> getProductsSold(){
      return productsSold.iterator();
   }
 
-  public  Supplier (String name, String address, String phone) {
+  public Supply findProductSold(String product_id) {
+    Iterator<Supply> iter = getProductsSold();
+    while (iter.hasNext()) {
+      Supply s = iter.next();
+      if (s.getProductID() == product_id) {
+        return s;
+      }
+    }
+    return null;
+  }
+
+  public boolean updateProductPrice(String product_id, double new_price) {
+    if (new_price < 0.0) {
+      return false;
+    }
+
+    Supply s = findProductSold(product_id);
+    if (s == null) {
+      return false;
+    }
+
+    s.setPrice(new_price);
+    return true;
+  }
+
+  public Supplier (String name, String address, String phone) {
     this.name = name;
     this.address = address;
     this.phone = phone;
