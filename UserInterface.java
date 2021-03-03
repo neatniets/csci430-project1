@@ -32,7 +32,7 @@ public class UserInterface {
   private UserInterface() {
       warehouse = Warehouse.instance();
     }
-  
+
   //UserInterface instance provides window for user interactions.
   public static UserInterface instance() {
     if (userInterface == null) {
@@ -40,9 +40,9 @@ public class UserInterface {
     } else {
       return userInterface;
     }
-    
+
   }
-  
+
   //Function to get user's input.
   public String getToken(String prompt) {
     do {
@@ -53,25 +53,25 @@ public class UserInterface {
         if (tokenizer.hasMoreTokens()) {
           return tokenizer.nextToken();
         }
-        
+
       } catch (IOException ioe) {
         System.exit(0);
       }
-      
+
     } while (true);
-    
+
   }
-  
+
   //Function to get user's input for yes or no questions.
   private boolean yesOrNo(String prompt) {
     String more = getToken(prompt + " (Y|y)[es] or anything else for no");
     if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
       return false;
     }
-    
+
     return true;
   }
-  
+
   //Function to get user's input when the input is a number.
   public int getNumber(String prompt) {
     do {
@@ -82,12 +82,12 @@ public class UserInterface {
       } catch (NumberFormatException nfe) {
         System.out.println("Please input a number ");
       }
-      
+
     } while (true);
-    
+
   }
-  
-  
+
+
   //Function to get the command a user has chosen from the interactive menu.
   public int getCommand() {
     do {
@@ -96,13 +96,13 @@ public class UserInterface {
         if (value >= EXIT && value <= HELP) {
           return value;
         }
-        
+
       } catch (NumberFormatException nfe) {
         System.out.println("Enter a number");
       }
-      
+
     } while (true);
-    
+
   }
 
   //Function to show the interactive menu to the user.
@@ -135,7 +135,7 @@ public class UserInterface {
   //Function to add a client to the warehouse.
   public void addClient() {
     String name = getToken("Enter client name:");
-    String address = getToken("Enter address:");    
+    String address = getToken("Enter address:");
     String phone = getToken("Enter phone:");
     //String clientid = getToken("Enter clients ID:");
     Client result;
@@ -143,10 +143,10 @@ public class UserInterface {
     if (result == null) {
       System.out.println("Could not add client.");
     }
-    
+
     System.out.println(result);
   }
-  
+
   //Function to add a product to the warehouse.
   public void addProduct() {
 	    Product result;
@@ -161,15 +161,15 @@ public class UserInterface {
 	      } else {
 	        System.out.println("Product could not be added.");
 	      }
-	      
+
 	      if (!yesOrNo("Add more products?")) {
 	        break;
 	      }
-	      
+
 	    } while (true);
-	    
+
 	  }
-  
+
   //Function to add a Supplier to the warehouse.
   public void addSupplier() {
 	  String name = getToken("Enter Supplier's name:");
@@ -180,7 +180,7 @@ public class UserInterface {
 	  if (result == null) {
 	    System.out.println("Could not add Supplier.");
 	  }
-	  System.out.println(result);   
+	  System.out.println(result);
   }
 
   // print list of products
@@ -221,7 +221,7 @@ public class UserInterface {
       }else {
         System.out.println("supplier not found.");
       }
-    
+
   }
 
   //print specipic client information.
@@ -491,13 +491,13 @@ public class UserInterface {
                                 break;
 
       }
-      
+
     }
-    
+
   }
 
   public static void main(String[] args) {
           UserInterface.instance().process();
   }
-  
+
 }
