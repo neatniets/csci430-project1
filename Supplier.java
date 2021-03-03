@@ -28,18 +28,18 @@ public class Supplier {
     return null;
   }
 
-  public boolean updateProductPrice(String product_id, double new_price) {
+  public Supply updateProductPrice(String product_id, double new_price) {
     if (new_price < 0.0) {
-      return false;
+      return null;
     }
 
     Supply s = findProductSold(product_id);
     if (s == null) {
-      return false;
+      return null;
     }
 
     s.setPrice(new_price);
-    return true;
+    return s;
   }
 
   public Supplier (String name, String address, String phone) {
