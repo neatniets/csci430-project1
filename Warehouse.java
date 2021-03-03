@@ -182,6 +182,24 @@ public class Warehouse implements Serializable {
                 return c;
         }
 
+       /* update a suppliers price for a product.*/
+       public Supply updateSupplyPrice(String sid, String pid, double price){
+               Supplier s = slist.find(sid);
+               if (s == null) {
+                       return null;
+               }
+               return s.updateProductPrice(pid, price);
+       }
+
+       public Iterator<Transaction> getTransactions(String client_id) {
+               Client c = clist.getClient(client_id);
+               if (c == null) {
+                       return null;
+               } else {
+                       return c.getTransactionList();
+               }
+       }
+
         public boolean add2ShoppingCart(String client_id,
                                         String product_id,
                                         int quantity) {
