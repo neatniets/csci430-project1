@@ -21,7 +21,7 @@ public class Supplier {
     Iterator<Supply> iter = getProductsSold();
     while (iter.hasNext()) {
       Supply s = iter.next();
-      if (s.getProductID() == product_id) {
+      if (s.getProductID().compareTo(product_id) == 0) {
         return s;
       }
     }
