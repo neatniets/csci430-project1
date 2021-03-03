@@ -26,7 +26,10 @@ public class UserInterface {
   private static final int PRINT_SUPPLIERS_OF_PRODUCT = 18;
   private static final int PRINT_A_SUPPLIERS_PRODUCTS = 19;
   private static final int ADD_PRODUCT_TO_SUPPLIER = 20;
-  private static final int HELP = 21;
+  private static final int List_All_Transactions_For_A_Client = 21;
+  private static final int List_All_Clients_With_Outstanding_Balance = 22;
+  private static final int Update_Suppliers_Price_For_product = 23;
+  private static final int HELP = 24;
   
   //Constructor
   private UserInterface() {
@@ -129,6 +132,9 @@ public class UserInterface {
 	System.out.println(PRINT_SUPPLIERS_OF_PRODUCT + "to print all the suppliers of a product");
 	System.out.println(PRINT_A_SUPPLIERS_PRODUCTS + "to print all of a supplier's products");
 	System.out.println(ADD_PRODUCT_TO_SUPPLIER + "to add a product a supplier sells");
+    System.out.println(List_All_Transactions_For_A_Client + " to print a clients shopping cart");
+    System.out.println(List_All_Clients_With_Outstanding_Balance + " to print a clients shopping cart");
+    System.out.println(Update_Suppliers_Price_For_product + " to print a clients shopping cart");
     System.out.println(HELP + " for help menu.");
   }
 
@@ -413,6 +419,10 @@ public class UserInterface {
   public void PrintSuppliersOfProduct() {
 	  String id = getToken("Product ID: ");
 	  Iterator<Supply> iter = warehouse.getSuppliersForProduct(id);
+    if (iter == null) {
+      System.out.println("Product not found.");
+      return;
+    }
 	  while (iter.hasNext()) {
 		  Supply supply = iter.next();
 		  System.out.print("Supplier ID: " + supply.getSupplierID() + "\n"
@@ -425,6 +435,10 @@ public class UserInterface {
   public void PrintSuppliersProducts() {
 	  String id = getToken("Supplier ID: ");
 	  Iterator<Supply> iter = warehouse.getSuppliersProducts(id);
+    if (iter == null) {
+      System.out.println("Supplier not found.");
+      return;
+    }
 	  while (iter.hasNext()) {
 		Supply supply = iter.next();
                 Product product = warehouse.getProduct(supply.getProductID());
@@ -438,8 +452,20 @@ public class UserInterface {
 	  String sid = getToken("Supplier ID: ");
           String pid = getToken("Product ID: ");
           double price = Double.parseDouble(getToken("Price: "));
-	  warehouse.addSupply(pid, sid, price);
+	  Supply s = warehouse.addSupply(pid, sid, price);
+    if (s == null) {
+      System.out.println("Failed to add that product to that supplier.");
+    } else {
+      System.out.println(s);
+    }
 	 }
+
+  public void ListAllTransactionsOFAclient() {
+  }
+  public void ListAllClientsWithOSBalance() {
+  }
+  public void UpdateSuppliersPriceForAProduct() {
+  }
 
   //Function to invoke the suitable functions according to the user's choice.
   public void process() {
@@ -487,6 +513,12 @@ public class UserInterface {
 								break;
 		case ADD_PRODUCT_TO_SUPPLIER:						addSupplierProduct();
 								break;
+        case List_All_Transactions_For_A_Client:               ListAllTransactionsOFAclient();
+                                break;
+        case List_All_Clients_With_Outstanding_Balance:       ListAllClientsWithOSBalance();
+                                break;
+        case Update_Suppliers_Price_For_product:              UpdateSuppliersPriceForAProduct();
+                                break;
         case HELP:                                          help();
                                 break;
 
