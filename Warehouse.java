@@ -149,7 +149,6 @@ public class Warehouse implements Serializable {
           }
         }
 
-        /* Matt got a working ID generator */
         public Client addClient(String name,
                                 String address,
                                 String phone) {
