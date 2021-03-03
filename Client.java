@@ -35,6 +35,9 @@ public class Client implements Serializable {
   public String getId() {
     return id;
   }
+  public double getBalance() {
+          return balance;
+  }
   public shoppingCart getShoppingCart() {
     return cart;
   }
