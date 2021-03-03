@@ -24,4 +24,10 @@ public class Supply {
 	public void setPrice(double new_price) {
 		price = new_price;
 	}
+
+  public String toString() {
+    return "Product ID: " + product_id + "\n"
+           + "Supplier ID: " + supplier_id + "\n"
+           + "Price: " + price;
+  }
 }
