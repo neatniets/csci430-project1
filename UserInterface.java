@@ -110,7 +110,7 @@ public class UserInterface {
 
   //Function to show the interactive menu to the user.
   public void help() {
-    System.out.println("Enter a number between 0 and 18 as explained below:");
+    System.out.println("Enter a number between 0 and 24 as explained below:");
     System.out.println(EXIT + " to Exit");
     System.out.println(ADD_CLIENT + " to add a client.");
     System.out.println(ADD_PRODUCT + " to add products.");
@@ -132,9 +132,9 @@ public class UserInterface {
 	System.out.println(PRINT_SUPPLIERS_OF_PRODUCT + "to print all the suppliers of a product");
 	System.out.println(PRINT_A_SUPPLIERS_PRODUCTS + "to print all of a supplier's products");
 	System.out.println(ADD_PRODUCT_TO_SUPPLIER + "to add a product a supplier sells");
-    System.out.println(List_All_Transactions_For_A_Client + " to print a clients shopping cart");
-    System.out.println(List_All_Clients_With_Outstanding_Balance + " to print a clients shopping cart");
-    System.out.println(Update_Suppliers_Price_For_product + " to print a clients shopping cart");
+    System.out.println(List_All_Transactions_For_A_Client + " to list all transactions for a client.");
+    System.out.println(List_All_Clients_With_Outstanding_Balance + " to list all clients that owe money.");
+    System.out.println(Update_Suppliers_Price_For_product + " to update the price that a supplier sells a product for.");
     System.out.println(HELP + " for help menu.");
   }
 
