@@ -475,8 +475,18 @@ public class UserInterface {
       }
     }
   }
+
   public void ListAllClientsWithOSBalance() {
+    Iterator<Client> iter = warehouse.getClients();
+    while (iter.hasNext()) {
+      Client c = iter.next();
+      if (c.OutStandingBalance()) {
+        System.out.println("ID: " + c.getId() + "\tName: " + c.getName()
+                           + "\tBalance: $" + c.getBalance());
+      }
+    }
   }
+
   public void UpdateSuppliersPriceForAProduct() {
   }
 
