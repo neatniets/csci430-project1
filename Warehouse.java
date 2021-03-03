@@ -80,20 +80,33 @@ public class Warehouse implements Serializable {
 
         public Iterator<Supply> getSuppliersForProduct(String pid) {
                 Product product = plist.find(pid);
-                return product.getSuppliersOfProduct();
+                if (product == null) {
+                        return null;
+                } else {
+                        return product.getSuppliersOfProduct();
+                }
         }
 
         public Iterator<Supply> getSuppliersProducts(String sid) {
                 Supplier supplier = slist.find(sid);
-                return supplier.getProductsSold();
+                if (supplier == null) {
+                        return null;
+                } else {
+                        return supplier.getProductsSold();
+                }
         }
 
-        public void addSupply(String pid, String sid, double price) {
+        public Supply addSupply(String pid, String sid, double price) {
                 Product product = plist.find(pid);
                 Supplier supplier = slist.find(sid);
-                Supply supply = new Supply(sid, pid, price);
-                supplier.insertProductSold(supply);
-                product.addSupplytoList(supply);
+                if ((product == null) || (supplier == null)) {
+                        return null;
+                } else {
+                        Supply supply = new Supply(sid, pid, price);
+                        supplier.insertProductSold(supply);
+                        product.addSupplytoList(supply);
+                        return supply;
+                }
         }
 
         public Supplier addSupplier(String name,
