@@ -488,6 +488,15 @@ public class UserInterface {
   }
 
   public void UpdateSuppliersPriceForAProduct() {
+    String sid = getToken("Supplier ID: ");
+    String pid = getToken("Product ID: ");
+    double price = Double.parseDouble(getToken("New price: "));
+    Supply s = warehouse.updateSupplyPrice(sid, pid, price);
+    if (s == null) {
+      System.out.println("The price failed to update.");
+    } else {
+      System.out.println(s);
+    }
   }
 
   //Function to invoke the suitable functions according to the user's choice.
