@@ -409,6 +409,10 @@ public class UserInterface {
   public void PrintWaitlist() {
     String id = getToken("Product ID: ");
     Iterator<WaitlistEntry> iter = warehouse.getWaitlist(id);
+    if (iter == null) {
+      System.out.println("Product not found.");
+      return;
+    }
     while (iter.hasNext()) {
       WaitlistEntry entry = iter.next();
       System.out.print("Client: " + entry.getClientId() + "\n"
@@ -461,6 +465,15 @@ public class UserInterface {
 	 }
 
   public void ListAllTransactionsOFAclient() {
+    String id = getToken("Client ID: ");
+    Iterator<Transaction> iter = warehouse.getTransactions(id);
+    if (iter == null) {
+      System.out.println("Client not found.");
+    } else {
+      while (iter.hasNext()) {
+        System.out.println(iter.next());
+      }
+    }
   }
   public void ListAllClientsWithOSBalance() {
   }
