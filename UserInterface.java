@@ -30,11 +30,11 @@ public class UserInterface {
   private static final int List_All_Clients_With_Outstanding_Balance = 22;
   private static final int Update_Suppliers_Price_For_product = 23;
   private static final int HELP = 24;
-  
+
   //Constructor
   private UserInterface() {
-      warehouse = Warehouse.instance();
-    }
+    warehouse = Warehouse.instance();
+  }
 
   //UserInterface instance provides window for user interactions.
   public static UserInterface instance() {
@@ -129,9 +129,9 @@ public class UserInterface {
     System.out.println(PROCESS_ORDER + " to place an order w/ shopping cart.");
     System.out.println(LIST_PRODUCTS_W_WAITLIST + " to list all products that clients are waiting on.");
     System.out.println(PRINT_WAITLIST + " to print the waitlist for a product.");
-	System.out.println(PRINT_SUPPLIERS_OF_PRODUCT + "to print all the suppliers of a product");
-	System.out.println(PRINT_A_SUPPLIERS_PRODUCTS + "to print all of a supplier's products");
-	System.out.println(ADD_PRODUCT_TO_SUPPLIER + "to add a product a supplier sells");
+    System.out.println(PRINT_SUPPLIERS_OF_PRODUCT + "to print all the suppliers of a product");
+    System.out.println(PRINT_A_SUPPLIERS_PRODUCTS + "to print all of a supplier's products");
+    System.out.println(ADD_PRODUCT_TO_SUPPLIER + "to add a product a supplier sells");
     System.out.println(List_All_Transactions_For_A_Client + " to list all transactions for a client.");
     System.out.println(List_All_Clients_With_Outstanding_Balance + " to list all clients that owe money.");
     System.out.println(Update_Suppliers_Price_For_product + " to update the price that a supplier sells a product for.");
@@ -155,78 +155,78 @@ public class UserInterface {
 
   //Function to add a product to the warehouse.
   public void addProduct() {
-	    Product result;
-	    do {
-	      String name = getToken("Enter product's name:");
-	      double price
-                      = Double.parseDouble(getToken("Enter product Price:"));
-        int quantity = Integer.parseInt(getToken("Enter Product Quantity:"));
-	      result = warehouse.addProduct(name, price, quantity);
-	      if (result != null) {
-	        System.out.println(result);
-	      } else {
-	        System.out.println("Product could not be added.");
-	      }
+    Product result;
+    do {
+      String name = getToken("Enter product's name:");
+      double price
+        = Double.parseDouble(getToken("Enter product Price:"));
+      int quantity = Integer.parseInt(getToken("Enter Product Quantity:"));
+      result = warehouse.addProduct(name, price, quantity);
+      if (result != null) {
+        System.out.println(result);
+      } else {
+        System.out.println("Product could not be added.");
+      }
 
-	      if (!yesOrNo("Add more products?")) {
-	        break;
-	      }
+      if (!yesOrNo("Add more products?")) {
+        break;
+      }
 
-	    } while (true);
+    } while (true);
 
-	  }
+  }
 
   //Function to add a Supplier to the warehouse.
   public void addSupplier() {
-	  String name = getToken("Enter Supplier's name:");
-	  String address = getToken("Enter address:");
-	  String phone = getToken("Enter phone:");
-	  Supplier result;
-	  result = warehouse.addSupplier(name, address, phone);
-	  if (result == null) {
-	    System.out.println("Could not add Supplier.");
-	  }
-	  System.out.println(result);
+    String name = getToken("Enter Supplier's name:");
+    String address = getToken("Enter address:");
+    String phone = getToken("Enter phone:");
+    Supplier result;
+    result = warehouse.addSupplier(name, address, phone);
+    if (result == null) {
+      System.out.println("Could not add Supplier.");
+    }
+    System.out.println(result);
   }
 
   // print list of products
   public void ListAllProducts() {
     Iterator allProducts = warehouse.getProducts();
-      while (allProducts.hasNext()){
-	  Product product = (Product)(allProducts.next());
-          System.out.println(product.toString());
-      }
+    while (allProducts.hasNext()){
+      Product product = (Product)(allProducts.next());
+      System.out.println(product.toString());
+    }
   }
 
   //print list of all suppliers
   public void ListAllSuppliers() {
     Iterator allSuppliers = warehouse.getSuppliers();
-      while (allSuppliers.hasNext()){
-	  Supplier supplier = (Supplier)(allSuppliers.next());
-          System.out.println(supplier.toString());
-      }
+    while (allSuppliers.hasNext()){
+      Supplier supplier = (Supplier)(allSuppliers.next());
+      System.out.println(supplier.toString());
+    }
   }
 
   //print list of all the products
   public void ListAllClients() {
     Iterator allClients = warehouse.getClients();
-      while (allClients.hasNext()){
-	  Client client = (Client)(allClients.next());
-          System.out.println(client.toString());
-      }
+    while (allClients.hasNext()){
+      Client client = (Client)(allClients.next());
+      System.out.println(client.toString());
+    }
   }
 
   //print specific supplier information
 
   public void PrintSupplierInformation() {
     Supplier result;
-      String id = getToken("enter suppliers id:");
-      result = warehouse.getSupplier(id);
-      if (result != null){
-        System.out.println(result);
-      }else {
-        System.out.println("supplier not found.");
-      }
+    String id = getToken("enter suppliers id:");
+    result = warehouse.getSupplier(id);
+    if (result != null){
+      System.out.println(result);
+    }else {
+      System.out.println("supplier not found.");
+    }
 
   }
 
@@ -381,7 +381,7 @@ public class UserInterface {
       CartItem item = iter.next();
       Product p = item.getProduct();
       System.out.println(p.getId() + "\t" + p.getName() + "\t"
-                         + item.getQuantity());
+          + item.getQuantity());
     }
     System.out.println();
   }
@@ -416,53 +416,53 @@ public class UserInterface {
     while (iter.hasNext()) {
       WaitlistEntry entry = iter.next();
       System.out.print("Client: " + entry.getClientId() + "\n"
-                       + "Quantity: " + entry.getQuantity() + "\n");
+          + "Quantity: " + entry.getQuantity() + "\n");
     }
   }
 
   public void PrintSuppliersOfProduct() {
-	  String id = getToken("Product ID: ");
-	  Iterator<Supply> iter = warehouse.getSuppliersForProduct(id);
+    String id = getToken("Product ID: ");
+    Iterator<Supply> iter = warehouse.getSuppliersForProduct(id);
     if (iter == null) {
       System.out.println("Product not found.");
       return;
     }
-	  while (iter.hasNext()) {
-		  Supply supply = iter.next();
-		  System.out.print("Supplier ID: " + supply.getSupplierID() + "\n"
-					+ "Supplier Name: " + warehouse.getSupplier(supply.getSupplierID()).getName() + "\n"
-					+ "Supplier's Price: $" + supply.getPrice() + "\n");
-	  }
-	 }
-  
-  
+    while (iter.hasNext()) {
+      Supply supply = iter.next();
+      System.out.print("Supplier ID: " + supply.getSupplierID() + "\n"
+          + "Supplier Name: " + warehouse.getSupplier(supply.getSupplierID()).getName() + "\n"
+          + "Supplier's Price: $" + supply.getPrice() + "\n");
+    }
+  }
+
+
   public void PrintSuppliersProducts() {
-	  String id = getToken("Supplier ID: ");
-	  Iterator<Supply> iter = warehouse.getSuppliersProducts(id);
+    String id = getToken("Supplier ID: ");
+    Iterator<Supply> iter = warehouse.getSuppliersProducts(id);
     if (iter == null) {
       System.out.println("Supplier not found.");
       return;
     }
-	  while (iter.hasNext()) {
-		Supply supply = iter.next();
-                Product product = warehouse.getProduct(supply.getProductID());
-		System.out.print("Product ID: " + supply.getProductID() + "\n"
-                       + "Name: " + product.getName() + "\n"
-		       + "Supplier's Price: $" + supply.getPrice() + "\n");
-	  }
-	 }
+    while (iter.hasNext()) {
+      Supply supply = iter.next();
+      Product product = warehouse.getProduct(supply.getProductID());
+      System.out.print("Product ID: " + supply.getProductID() + "\n"
+          + "Name: " + product.getName() + "\n"
+          + "Supplier's Price: $" + supply.getPrice() + "\n");
+    }
+  }
 
   public void addSupplierProduct() {
-	  String sid = getToken("Supplier ID: ");
-          String pid = getToken("Product ID: ");
-          double price = Double.parseDouble(getToken("Price: "));
-	  Supply s = warehouse.addSupply(pid, sid, price);
+    String sid = getToken("Supplier ID: ");
+    String pid = getToken("Product ID: ");
+    double price = Double.parseDouble(getToken("Price: "));
+    Supply s = warehouse.addSupply(pid, sid, price);
     if (s == null) {
       System.out.println("Failed to add that product to that supplier.");
     } else {
       System.out.println(s);
     }
-	 }
+  }
 
   public void ListAllTransactionsOFAclient() {
     String id = getToken("Client ID: ");
@@ -482,7 +482,7 @@ public class UserInterface {
       Client c = iter.next();
       if (c.OutStandingBalance()) {
         System.out.println("ID: " + c.getId() + "\tName: " + c.getName()
-                           + "\tBalance: $" + c.getBalance());
+            + "\tBalance: $" + c.getBalance());
       }
     }
   }
@@ -505,55 +505,78 @@ public class UserInterface {
     help();
     while ((command = getCommand()) != EXIT) {
       switch (command) {
-        case ADD_CLIENT:                                    addClient();
-                                break;
-        case ADD_PRODUCT:                                   addProduct();
-        						break;
-        case ADD_SUPPLIER:                                  addSupplier();
-                                break;
-        case LIST_ALL_PRODUCTS:                             ListAllProducts();
-                                break;
-        case LIST_ALL_SUPPLIERS:                            ListAllSuppliers();
-                                break;
-        case LIST_ALL_CLIENTS:                              ListAllClients();
-                                break;
-        case PRINT_SUPPLIER_PERSONAL_INFORMATION:           PrintSupplierInformation();
-                                break;
-        case PRINT_SPECIFIC_CLIENTS_PERSONAL_INFORMATION:   PrintSpecificClientsInfo();
-                                break;
-        case PRINT_INFORMATION_ON_SPECIFIC_PRODUCT:         PrintInfoAboutSpecificProduct();
-                                break;
-        case UPTADE_CLIENTS_PERSONAL_INFORMATION:           UpdateClientsInformation();
-                                break;
-        case UPDTE_SUPPLIERS_PERSONAL_INFORMATION:          UpdateSuppliersInformation();
-                                break;
-        case UPDATE_PRODUCTS_PRICE:                         UpdateProductsPrice();
-                                break;
-        case ADD_ITEM_TO_THE_SHOPPING_CART:                 AddItemToShoppingCart();
-                                break;
-        case PRINT_A_CLIENTS_SHOPPING_CART:                 PrintClientsShoppingCart();
-                                break;
-        case PROCESS_ORDER:									ProcessOrder();
-								break;
-        case LIST_PRODUCTS_W_WAITLIST:						ListProductsWithWaitlist();
-								break;
-        case PRINT_WAITLIST:								PrintWaitlist();
-								break;
-		case PRINT_SUPPLIERS_OF_PRODUCT:					PrintSuppliersOfProduct();
-								break;
-		case PRINT_A_SUPPLIERS_PRODUCTS:					PrintSuppliersProducts();
-								break;
-		case ADD_PRODUCT_TO_SUPPLIER:						addSupplierProduct();
-								break;
-        case List_All_Transactions_For_A_Client:               ListAllTransactionsOFAclient();
-                                break;
-        case List_All_Clients_With_Outstanding_Balance:       ListAllClientsWithOSBalance();
-                                break;
-        case Update_Suppliers_Price_For_product:              UpdateSuppliersPriceForAProduct();
-                                break;
-        case HELP:                                          help();
-                                break;
-
+        case ADD_CLIENT:
+          addClient();
+          break;
+        case ADD_PRODUCT:
+          addProduct();
+          break;
+        case ADD_SUPPLIER:
+          addSupplier();
+          break;
+        case LIST_ALL_PRODUCTS:
+          ListAllProducts();
+          break;
+        case LIST_ALL_SUPPLIERS:
+          ListAllSuppliers();
+          break;
+        case LIST_ALL_CLIENTS:
+          ListAllClients();
+          break;
+        case PRINT_SUPPLIER_PERSONAL_INFORMATION:
+          PrintSupplierInformation();
+          break;
+        case PRINT_SPECIFIC_CLIENTS_PERSONAL_INFORMATION:
+          PrintSpecificClientsInfo();
+          break;
+        case PRINT_INFORMATION_ON_SPECIFIC_PRODUCT:
+          PrintInfoAboutSpecificProduct();
+          break;
+        case UPTADE_CLIENTS_PERSONAL_INFORMATION:
+          UpdateClientsInformation();
+          break;
+        case UPDTE_SUPPLIERS_PERSONAL_INFORMATION:
+          UpdateSuppliersInformation();
+          break;
+        case UPDATE_PRODUCTS_PRICE:
+          UpdateProductsPrice();
+          break;
+        case ADD_ITEM_TO_THE_SHOPPING_CART:
+          AddItemToShoppingCart();
+          break;
+        case PRINT_A_CLIENTS_SHOPPING_CART:
+          PrintClientsShoppingCart();
+          break;
+        case PROCESS_ORDER:
+          ProcessOrder();
+          break;
+        case LIST_PRODUCTS_W_WAITLIST:
+          ListProductsWithWaitlist();
+          break;
+        case PRINT_WAITLIST:
+          PrintWaitlist();
+          break;
+        case PRINT_SUPPLIERS_OF_PRODUCT:
+          PrintSuppliersOfProduct();
+          break;
+        case PRINT_A_SUPPLIERS_PRODUCTS:
+          PrintSuppliersProducts();
+          break;
+        case ADD_PRODUCT_TO_SUPPLIER:
+          addSupplierProduct();
+          break;
+        case List_All_Transactions_For_A_Client:
+          ListAllTransactionsOFAclient();
+          break;
+        case List_All_Clients_With_Outstanding_Balance:
+          ListAllClientsWithOSBalance();
+          break;
+        case Update_Suppliers_Price_For_product:
+          UpdateSuppliersPriceForAProduct();
+          break;
+        case HELP:
+          help();
+          break;
       }
 
     }
@@ -561,7 +584,7 @@ public class UserInterface {
   }
 
   public static void main(String[] args) {
-          UserInterface.instance().process();
+    UserInterface.instance().process();
   }
 
 }
