@@ -189,7 +189,10 @@ public class Product {
               supplyList.add(supply);
               return true;
 	}
-		
+
+  public void add2Stock(int qty) {
+    increaseQuantity(qty);
+  }
 
         /** Create a string representing the Product object.
          * @return      the string */
