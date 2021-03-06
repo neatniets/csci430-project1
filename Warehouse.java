@@ -239,6 +239,19 @@ public class Warehouse implements Serializable {
                 return c.getShoppingCart().getProducts();
         }
 
+        public int fillOrder(String client_id,
+                              String product_id,
+                              int qty) {
+                /* dummy */
+                return 0;
+        }
+
+        public Product add2Stock(String product_id,
+                                 int qty) {
+                /* dummy */
+                return null;
+        }
+
         public static Warehouse retrieve() {
                 try {
                         FileInputStream file = new FileInputStream("WarehouseData");

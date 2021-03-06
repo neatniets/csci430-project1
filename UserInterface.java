@@ -29,7 +29,8 @@ public class UserInterface {
   private static final int List_All_Transactions_For_A_Client = 21;
   private static final int List_All_Clients_With_Outstanding_Balance = 22;
   private static final int Update_Suppliers_Price_For_product = 23;
-  private static final int HELP = 24;
+  private static final int RECEIVE_SHIPMENT = 24;
+  private static final int HELP = 27;
 
   //Constructor
   private UserInterface() {
@@ -110,7 +111,8 @@ public class UserInterface {
 
   //Function to show the interactive menu to the user.
   public void help() {
-    System.out.println("Enter a number between 0 and 24 as explained below:");
+    System.out.println("Enter a number between " + EXIT + " and " + HELP +
+                       " as explained below:");
     System.out.println(EXIT + " to Exit");
     System.out.println(ADD_CLIENT + " to add a client.");
     System.out.println(ADD_PRODUCT + " to add products.");
@@ -135,6 +137,7 @@ public class UserInterface {
     System.out.println(List_All_Transactions_For_A_Client + " to list all transactions for a client.");
     System.out.println(List_All_Clients_With_Outstanding_Balance + " to list all clients that owe money.");
     System.out.println(Update_Suppliers_Price_For_product + " to update the price that a supplier sells a product for.");
+    System.out.println(RECEIVE_SHIPMENT + " to enter a shipment of product into the system");
     System.out.println(HELP + " for help menu.");
   }
 
@@ -499,6 +502,52 @@ public class UserInterface {
     }
   }
 
+  public void receiveShipment() {
+    /* get the product ID and qty of product received */
+    String product_id = getToken("Product ID: ");
+    int qty = Integer.parseInt(getToken("Quantity: "));
+    /* get an iterator for the product's waitlist */
+    Iterator<WaitlistEntry> iter = warehouse.getWaitlist(product_id);
+    /* verify the product ID was valid */
+    if (iter == null) { // invalid
+      System.out.println("No product with the ID '" + product_id + "' found");
+      return;
+    }
+
+    /* show each non-zero waitlist entry & ask if the order would like to be
+     * filled */
+    while ((iter.hasNext()) && (qty > 0)) {
+      WaitlistEntry entry = iter.next();
+      int wqty = entry.getQuantity();
+      /* skip empty entries */
+      if (wqty == 0) {
+        continue;
+      }
+
+      /* print remaining qty in shipment */
+      System.out.println("Remaining shipment qty: " + qty);
+      /* print client ID & quantity */
+      String client_id = entry.getClientId();
+      System.out.println("ID: " + client_id + "\tqty: " + wqty);
+      /* ask if this order would like to be filled */
+      boolean is_yes = yesOrNo("Would you like to fill this order? ");
+      if (is_yes) {
+        /* fill the order & update qty */
+        qty = warehouse.fillOrder(client_id, product_id, qty);
+      }
+    }
+
+    /* add remaining quantity to stock */
+    if (qty > 0) {
+      Product p = warehouse.add2Stock(product_id, qty);
+      System.out.println(qty + " added to warehouse stock");
+      System.out.println(p);
+    }
+
+    /* indicate process has completed */
+    System.out.println("Shipment received.");
+  }
+
   //Function to invoke the suitable functions according to the user's choice.
   public void process() {
     int command;
@@ -573,6 +622,9 @@ public class UserInterface {
           break;
         case Update_Suppliers_Price_For_product:
           UpdateSuppliersPriceForAProduct();
+          break;
+        case RECEIVE_SHIPMENT:
+          receiveShipment();
           break;
         case HELP:
           help();
