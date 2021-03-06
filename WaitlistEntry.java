@@ -29,6 +29,16 @@ public class WaitlistEntry {
                 return qty;
         }
 
+        /** Quantity setter */
+        public boolean setQuantity(int qty) {
+          if (qty < 0) {
+            return false;
+          } else {
+            this.qty = qty;
+            return true;
+          }
+        }
+
         /** Increase the quantity of this waitlist entry.
          * @param[in]   quantity        qty to increase by
          * @post        object unchanged if this returns false

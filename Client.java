@@ -2,6 +2,8 @@ import java.util.*;
 import java.io.*;
 import java.util.TreeMap;
 import java.util.Iterator;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Client implements Serializable {
   private static final long serialVersionUID = 1L;
@@ -84,11 +86,48 @@ public class Client implements Serializable {
     }
   }
   private void charge2Account(double amt) {
-    this.balance += amt;
+    balance += amt;
+    /* round balance to 2 decimals */
+    BigDecimal bd = new BigDecimal(Double.toString(balance));
+    bd = bd.setScale(2, RoundingMode.HALF_UP);
+    balance = bd.doubleValue();
   }
   private boolean addTransaction(Transaction t) {
 	transactionList.add(t); 
 	return true;
+  }
+  public int fillOrder(String product_id,
+                       int max_qty) {
+    /* init transaction */
+    Transaction t = new Transaction((new Date()).toString(), "", 0.00);
+    /* get waitlist entry for order */
+    WaitlistEntry entry = Warehouse.instance()
+                          .getWaitlistEntry(id, product_id);
+    /* get waited on quantity */
+    int wait_qty = entry.getQuantity();
+    /* determine quantity to ship */
+    int order_qty;
+    if (max_qty < wait_qty) {
+      order_qty = max_qty;
+    } else {
+      order_qty = wait_qty;
+    }
+
+    /* decrease the waitlist quantity */
+    entry.setQuantity(wait_qty - order_qty);
+
+    /* get price of product */
+    Product p = Warehouse.instance().getProduct(entry.getProductId());
+    double price = p.getPrice();
+    /* add to transaction */
+    t.addItemOrder(product_id, order_qty, price);
+    /* charge amount */
+    charge2Account(t.getTotal());
+    /* add to list of transactions */
+    addTransaction(t);
+
+    /* return remaining quantity */
+    return max_qty - order_qty;
   }
 
   public boolean OutStandingBalance(){

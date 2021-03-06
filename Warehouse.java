@@ -161,6 +161,15 @@ public class Warehouse implements Serializable {
             return p.getWaitlist();
           }
         }
+        public WaitlistEntry getWaitlistEntry(String client_id,
+                                              String product_id) {
+                Product p = plist.find(product_id);
+                if (p == null) {
+                        return null;
+                } else {
+                        return p.getWaitlistEntry(client_id);
+                }
+        }
 
         public Client addClient(String name,
                                 String address,
@@ -240,16 +249,17 @@ public class Warehouse implements Serializable {
         }
 
         public int fillOrder(String client_id,
-                              String product_id,
-                              int qty) {
-                /* dummy */
-                return 0;
+                             String product_id,
+                             int qty) {
+                Client c = getClient(client_id);
+                return c.fillOrder(product_id, qty);
         }
 
         public Product add2Stock(String product_id,
                                  int qty) {
-                /* dummy */
-                return null;
+                Product p = getProduct(product_id);
+                p.add2Stock(qty);
+                return p;
         }
 
         public static Warehouse retrieve() {
