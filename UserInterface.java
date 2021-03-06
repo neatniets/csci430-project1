@@ -418,8 +418,10 @@ public class UserInterface {
     }
     while (iter.hasNext()) {
       WaitlistEntry entry = iter.next();
-      System.out.print("Client: " + entry.getClientId() + "\n"
-          + "Quantity: " + entry.getQuantity() + "\n");
+      if (entry.getQuantity() > 0) {
+        System.out.print("Client: " + entry.getClientId() + "\n"
+            + "Quantity: " + entry.getQuantity() + "\n");
+      }
     }
   }
 
