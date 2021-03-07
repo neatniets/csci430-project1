@@ -262,6 +262,19 @@ public class Warehouse implements Serializable {
                 return p;
         }
 
+        // Make a payment to a client's outstanding balance
+        public Boolean makePayment(String clientID, Float payment) {
+                Client client = clist.getClient(clientID);
+                return client.makePayment(payment);
+        }
+
+        // Display client's balance
+        public String dispalyBalance(String clientID) {
+                Client client = clist.getClient(clientID);
+                String balance = "Balance: " + client.getBalance();
+                return balance;
+        }
+
         public static Warehouse retrieve() {
                 try {
                         FileInputStream file = new FileInputStream("WarehouseData");

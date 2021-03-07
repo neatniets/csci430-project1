@@ -440,7 +440,6 @@ public class UserInterface {
     }
   }
 
-
   public void PrintSuppliersProducts() {
     String id = getToken("Supplier ID: ");
     Iterator<Supply> iter = warehouse.getSuppliersProducts(id);
@@ -548,6 +547,24 @@ public class UserInterface {
 
     /* indicate process has completed */
     System.out.println("Shipment received.");
+  }
+
+  // Make a payment to a client's outstanding balance
+  private void makePayment() {
+          String clientID = getToken("Enter client's ID:");
+          while(warehouse.getClient(clientID) == null) {
+                  clientID = getToken("Enter client's ID:");
+          }
+
+          String balance = warehouse.dispalyBalance(clientID);
+          System.out.println(balance);
+
+          Float payment = Float.parseFloat(getToken("Enter payment amount:"));
+          while(!warehouse.makePayment(clientID, payment)) {
+                  System.out.println("Payment must be less than or equal to outstanding balance, try again: ");
+                  payment = Float.parseFloat(getToken("Enter payment amount:"));
+          }
+          System.out.println("Payment accepted.");
   }
 
   //Function to invoke the suitable functions according to the user's choice.

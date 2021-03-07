@@ -143,6 +143,16 @@ public class Client implements Serializable {
   public Iterator getTransactionList() {
     return transactionList.iterator();
   }
+
+  public Boolean makePayment(float payment) {
+    if(payment <= balance) {
+      balance -= payment;
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
   
   public boolean equals(String id) {
     return this.id.equals(id);
