@@ -165,8 +165,8 @@ public class UserInterface {
     Product result;
     do {
       String name = getToken("Enter product's name:");
-      double price
-        = Double.parseDouble(getToken("Enter product Price:"));
+      Money price
+        = new Money(Double.parseDouble(getToken("Enter product Price:")));
       int quantity = Integer.parseInt(getToken("Enter Product Quantity:"));
       result = warehouse.addProduct(name, price, quantity);
       if (result != null) {
@@ -352,9 +352,9 @@ public class UserInterface {
     }
 
     /* ask for what changes are desired */
-    double price;
+    Money price;
     if (yesOrNo("Change price?")) {
-      price = Double.parseDouble(getToken("New price: "));
+      price = new Money(Double.parseDouble(getToken("New price: ")));
     } else {
       price = result.getPrice();
     }
@@ -563,10 +563,10 @@ public class UserInterface {
           String balance = warehouse.dispalyBalance(clientID);
           System.out.println(balance);
 
-          Float payment = Float.parseFloat(getToken("Enter payment amount:"));
+          Money payment = new Money(Double.parseDouble(getToken("Enter payment amount:")));
           while(!warehouse.makePayment(clientID, payment)) {
                   System.out.println("Payment must be less than or equal to outstanding balance, try again: ");
-                  payment = Float.parseFloat(getToken("Enter payment amount:"));
+                  payment = new Money(Double.parseDouble(getToken("Enter payment amount:")));
           }
           System.out.println("Payment accepted.");
   }
@@ -693,6 +693,8 @@ public class UserInterface {
   }
 
   public static void main(String[] args) {
+          Money tmp = new Money(3.49);
+          System.out.println(tmp + " > " + 0.00 + " = " + tmp.compareTo(0.00));
     UserInterface.instance().process();
   }
 

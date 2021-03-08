@@ -8,7 +8,7 @@ public class Product {
 
         private String id;      //!< unique identifier
         private String name;    //!< name of Product
-        private double price;   //!< warehouse sale price
+        private Money price;   //!< warehouse sale price
         private int quantity;   //!< quantity in stock in the warehouse
         /** A list of clients waiting for this product; may contain entries
          * which have a quantity of 0 */
@@ -19,14 +19,14 @@ public class Product {
          * @param[in]   name    name of Product
          * @post        price and quantity are set to 0 */
         public Product(String name) {
-                this(name, 0.0, 0);
+                this(name, new Money(0.0), 0);
         }
         /** Construct a new Product.
          * @param[in]   name            name of Product
          * @param[in]   price           price of product
          * @param[in]   quantity        quantity of product */
         public Product(String name,
-                       double price,
+                       Money price,
                        int quantity) {
                 this.id = PROD_STRING + (ProductIdServer.instance()).getId();
                 this.name = name;
@@ -50,7 +50,7 @@ public class Product {
 
         /** Obtain the warehouse sale price of the Product.
          * @return      Product sale price */
-        public double getPrice() {
+        public Money getPrice() {
                 return price;
         }
 
@@ -73,8 +73,8 @@ public class Product {
          * @pre         new_price must be >=0.0
          * @post        price is not modified if this returns false
          * @return      false if price is below 0, true otherwise */
-        public boolean setPrice(double new_price) {
-                if (new_price >= 0.0) {
+        public boolean setPrice(Money new_price) {
+                if (new_price.compareTo(0.0) >= 0) {
                         price = new_price;
                         return true;
                 } else {

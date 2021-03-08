@@ -37,7 +37,7 @@ public class Warehouse implements Serializable {
          * @return      reference to Product object on success,
          *              null on failure */
         public Product addProduct(String name,
-                                  double price,
+                                  Money price,
                                   int quantity) {
                 /* create product */
                 Product p = new Product(name, price, quantity);
@@ -68,7 +68,7 @@ public class Warehouse implements Serializable {
          * @return      product object found,
          *              null if product could not be found */
         public Product updateProductPrice(String pid,
-                                          double price) {
+                                          Money price) {
                 /* try to find product */
                 Product p = plist.find(pid);
                 if (p == null) { // no product found
@@ -263,7 +263,7 @@ public class Warehouse implements Serializable {
         }
 
         // Make a payment to a client's outstanding balance
-        public Boolean makePayment(String clientID, Float payment) {
+        public Boolean makePayment(String clientID, Money payment) {
                 Client client = clist.getClient(clientID);
                 return client.makePayment(payment);
         }

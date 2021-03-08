@@ -11,7 +11,7 @@ public class Client implements Serializable {
   private String address;
   private String phone;
   private String id;
-  private double balance;
+  private Money balance;
   private static final String Client_STRING = "M";
   private shoppingCart cart = new shoppingCart();
   private LinkedList<Transaction> transactionList;
@@ -21,7 +21,7 @@ public class Client implements Serializable {
     this.address = address;
     this.phone = phone;
     id = Client_STRING + (ClientIdServer.instance()).getId();
-    balance = 0.0;
+    balance = new Money(0.0);
 	transactionList = new LinkedList<Transaction>();
   }
 
@@ -37,7 +37,7 @@ public class Client implements Serializable {
   public String getId() {
     return id;
   }
-  public double getBalance() {
+  public Money getBalance() {
           return balance;
   }
   public shoppingCart getShoppingCart() {
@@ -54,7 +54,7 @@ public class Client implements Serializable {
   }
   public Transaction processOrder() {
     /* Initialize a Transaction for an order */
-    Transaction tran = new Transaction(new Date().toString(), "", 0.00);
+    Transaction tran = new Transaction(new Date().toString(), "", new Money(0.00));
     /* get cart contents */
     Iterator<CartItem> iter = cart.getProducts();
     while (iter.hasNext()) {
@@ -72,8 +72,8 @@ public class Client implements Serializable {
       }
     }
     /* only go through with transaction if something was actually ordered */
-    double total = tran.getTotal();
-    if (total > 0.0) { // proper order
+    Money total = tran.getTotal();
+    if (total.compareTo(0.0) > 0) { // proper order
       /* charge to client account */
       charge2Account(total);
       /* add transaction to list */
@@ -85,12 +85,8 @@ public class Client implements Serializable {
       return null;
     }
   }
-  private void charge2Account(double amt) {
-    balance += amt;
-    /* round balance to 2 decimals */
-    BigDecimal bd = new BigDecimal(Double.toString(balance));
-    bd = bd.setScale(2, RoundingMode.HALF_UP);
-    balance = bd.doubleValue();
+  private void charge2Account(Money amt) {
+    balance.add(amt);
   }
   private boolean addTransaction(Transaction t) {
 	transactionList.add(t); 
@@ -99,7 +95,7 @@ public class Client implements Serializable {
   public int fillOrder(String product_id,
                        int max_qty) {
     /* init transaction */
-    Transaction t = new Transaction((new Date()).toString(), "", 0.00);
+    Transaction t = new Transaction((new Date()).toString(), "", new Money(0.00));
     /* get waitlist entry for order */
     WaitlistEntry entry = Warehouse.instance()
                           .getWaitlistEntry(id, product_id);
@@ -118,7 +114,7 @@ public class Client implements Serializable {
 
     /* get price of product */
     Product p = Warehouse.instance().getProduct(entry.getProductId());
-    double price = p.getPrice();
+    Money price = p.getPrice();
     /* add to transaction */
     t.addItemOrder(product_id, order_qty, price);
     /* charge amount */
@@ -131,7 +127,7 @@ public class Client implements Serializable {
   }
 
   public boolean OutStandingBalance(){
-    if(balance>0){
+    if(balance.compareTo(0) > 0){
       return true;
     }
     else{
@@ -144,10 +140,10 @@ public class Client implements Serializable {
     return transactionList.iterator();
   }
 
-public boolean makePayment(float payment) {
-    if ((payment <= balance) && (payment >= 0.0)) {
+public boolean makePayment(Money payment) {
+    if ((balance.compareTo(payment) >= 0) && (payment.compareTo(0.00) > 0)) {
       Transaction tr = new Transaction(new Date().toString(), "Payment of " + payment, payment);
-      balance -= payment;
+      balance.sub(payment);
       addTransaction(tr);
       return true;
     }
