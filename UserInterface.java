@@ -30,6 +30,7 @@ public class UserInterface {
   private static final int List_All_Clients_With_Outstanding_Balance = 22;
   private static final int Update_Suppliers_Price_For_product = 23;
   private static final int RECEIVE_SHIPMENT = 24;
+  private static final int remove_quantity_of_item_from_shopping_cart = 25;
   private static final int HELP = 27;
 
   //Constructor
@@ -138,6 +139,7 @@ public class UserInterface {
     System.out.println(List_All_Clients_With_Outstanding_Balance + " to list all clients that owe money.");
     System.out.println(Update_Suppliers_Price_For_product + " to update the price that a supplier sells a product for.");
     System.out.println(RECEIVE_SHIPMENT + " to enter a shipment of product into the system");
+    System.out.println(remove_quantity_of_item_from_shopping_cart + "to remove some quantity of item from the shopping cart");
     System.out.println(HELP + " for help menu.");
   }
 
@@ -550,6 +552,34 @@ public class UserInterface {
     System.out.println("Shipment received.");
   }
 
+  //UI code to change the quantity of product in cart
+  public void changeQuaintity()
+  {
+    Client result;
+    Product res;
+    do{
+      String ClientID = getToken("Enter Client ID");
+      result = warehouse.getClient(ClientID);
+      if (result !=null){
+        String productID = getToken("enter Product ID");
+        int newQuantity = Integer.parseInt(getToken("enter quantity you want to remove"));
+        res = warehouse.getProduct(productID);
+        if(res !=null){
+          boolean answer = warehouse.removeProductQuantity(ClientID, productID, newQuantity);
+          if(answer){
+            System.out.println("Quantity changed");
+          }
+        }
+      }
+      else {
+        System.out.println("Error");
+      }
+      if(!yesOrNo("try Again")){
+        break;
+      }
+    }while (true);
+  }
+
   //Function to invoke the suitable functions according to the user's choice.
   public void process() {
     int command;
@@ -627,6 +657,9 @@ public class UserInterface {
           break;
         case RECEIVE_SHIPMENT:
           receiveShipment();
+          break;
+        case remove_quantity_of_item_from_shopping_cart:
+          changeQuaintity();
           break;
         case HELP:
           help();

@@ -262,6 +262,14 @@ public class Warehouse implements Serializable {
                 return p;
         }
 
+        // Warehouse code to change the quantity if product in cart
+        public boolean removeProductQuantity(String CID ,String PID, int quantity)
+        {
+                Client c = clist.getClient(CID);
+                Product p = plist.find(PID);
+                return c.getShoppingCart().removeProduct(p, quantity);
+        }
+
         public static Warehouse retrieve() {
                 try {
                         FileInputStream file = new FileInputStream("WarehouseData");
