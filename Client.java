@@ -144,9 +144,11 @@ public class Client implements Serializable {
     return transactionList.iterator();
   }
 
-  public Boolean makePayment(float payment) {
-    if(payment <= balance) {
+public boolean makePayment(float payment) {
+    if ((payment <= balance) && (payment >= 0.0)) {
+      Transaction tr = new Transaction(new Date().toString(), "Payment of " + payment, payment);
       balance -= payment;
+      addTransaction(tr);
       return true;
     }
     else {
