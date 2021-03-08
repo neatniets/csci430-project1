@@ -60,6 +60,16 @@ public class Product {
                 return quantity;
         }
 
+        /** Obtain the sum of waitlisted orders. */
+        public int sumWaitlist() {
+                Iterator<WaitlistEntry> iter = getWaitlist();
+                int sum = 0;
+                while (iter.hasNext()) {
+                        sum += iter.next().getQuantity();
+                }
+                return sum;
+        }
+
         /** Modify the name of the Product.
          * @param[in]   new_name        string of new name for Product
          * @return      always returns true */
@@ -198,7 +208,8 @@ public class Product {
          * @return      the string */
         public String toString() {
                 return "ID: " + getId() + "\nName: " + getName()
-                       + "\nPrice: " + getPrice() + "\nQuantity: "
-                       + getQuantity() + "\n";
+                       + "\nPrice: " + getPrice() + "\nStock: "
+                       + getQuantity() + "\nQuantity waited on by clients: "
+                       + sumWaitlist() + "\n";
         }
 }
