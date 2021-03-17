@@ -2,4 +2,4 @@ Group: 24
 Members: Cameron Nieters, Matthew Osterberg, Sirish Puri
 
 To compile: "make"
-To run: "java UserInterface"
+To run: "java WarehouseContext"

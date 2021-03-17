@@ -2,14 +2,28 @@
 OBJS := $(patsubst %.java, %.class, $(wildcard *.java))
 JC := javac
 
-all: $(OBJS)
+all: WarehouseContext.class
 
 clean:
-	-rm $(OBJS)
+	-rm *.class
 
-UserInterface.class: UserInterface.java Warehouse.class Product.class \
-	Supplier.class Client.class Transaction.class WaitlistEntry.class \
-	Supply.class Money.class
+WarehouseContext.class: %.class: %.java WarehouseState.class LoginState.class
+	$(JC) $<
+
+WarehouseState.class: %.class: %.java
+	$(JC) $<
+
+LoginState.class: %.class: %.java WarehouseState.class ClientMenuState.class \
+	ClerkMenuState.class ManagerMenuState.class
+	$(JC) $<
+
+ClientMenuState.class: %.class: %.java WarehouseState.class
+	$(JC) $<
+
+ClerkMenuState.class: %.class: %.java WarehouseState.class
+	$(JC) $<
+
+ManagerMenuState.class: %.class: %.java WarehouseState.class
 	$(JC) $<
 
 Warehouse.class: Warehouse.java ProductList.class Product.class Client.class \
