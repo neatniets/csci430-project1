@@ -136,7 +136,7 @@ public class Client implements Serializable {
 
   }
 
-  public Iterator getTransactionList() {
+  public Iterator<Transaction> getTransactionList() {
     return transactionList.iterator();
   }
 
