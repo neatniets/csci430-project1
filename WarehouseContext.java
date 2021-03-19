@@ -19,6 +19,10 @@ public class WarehouseContext {
                 return instance;
         }
 
+        public void setClientId(String cid) {
+                client_id = cid;
+        }
+
         /** Process the current state & state transitions until exit condition
          * is met. */
         public void process() {

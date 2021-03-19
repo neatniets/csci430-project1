@@ -14,7 +14,7 @@ WarehouseState.class: %.class: %.java
 	$(JC) $<
 
 LoginState.class: %.class: %.java WarehouseState.class ClientMenuState.class \
-	ClerkMenuState.class ManagerMenuState.class
+	ClerkMenuState.class ManagerMenuState.class Warehouse.class
 	$(JC) $<
 
 ClientMenuState.class: %.class: %.java WarehouseState.class

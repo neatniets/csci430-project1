@@ -1,4 +1,5 @@
 public class LoginState extends WarehouseState {
+        private Warehouse warehouse = null;
         private static LoginState instance = null;
         private static enum Cmds {
                 EXIT,
@@ -17,6 +18,7 @@ public class LoginState extends WarehouseState {
 
         private LoginState() {
                 super();
+                warehouse = Warehouse.instance();
         }
 
         public static WarehouseState instance() {
@@ -26,12 +28,31 @@ public class LoginState extends WarehouseState {
                 return instance;
         }
 
+        protected WarehouseState clientLogin() {
+                String id = null;
+                boolean is_valid_id = false;
+                /* get a legitimate client ID */
+                while (!is_valid_id) {
+                        id = getToken("Client ID: ");
+                        if (warehouse.getClient(id) == null) {
+                                System.out.println("No client with ID '"
+                                                   + id + ".'");
+                        } else {
+                                is_valid_id = true;
+                        }
+                }
+                /* set the client ID in the context */
+                context.setClientId(id);
+                /* return the next state */
+                return ClientMenuState.instance();
+        }
+
         public WarehouseState run() {
                 Cmds cmd = Cmds.HELP;
                 do {
                         switch (cmd) {
                         case CLIENT_LOGIN:
-                                return ClientMenuState.instance();
+                                return clientLogin();
                         case CLERK_LOGIN:
                                 return ClerkMenuState.instance();
                         case MANAGER_LOGIN:
