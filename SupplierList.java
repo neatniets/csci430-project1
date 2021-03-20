@@ -1,13 +1,18 @@
 import java.util.*;
-
 import java.io.*;
-import java.util.Iterator;
 
 public class SupplierList implements Serializable {
 private static final long serialVersionUID = 1L;
 private TreeMap<String, Supplier> map;
-public SupplierList(){
+private static SupplierList instance = null;
+private SupplierList(){
     map = new TreeMap <String, Supplier>();
+}
+public static SupplierList instance() {
+        if (instance == null) {
+                instance = new SupplierList();
+        }
+        return instance;
 }
 //find supplier by ID.
 

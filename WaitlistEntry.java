@@ -1,6 +1,8 @@
+import java.io.Serializable;
 /** Class representing a waitlist entry for a client waiting for some number of
  * a product */
-public class WaitlistEntry {
+public class WaitlistEntry implements Serializable {
+        private static final long serialVersionUID = 1L;
         String pid;     //!< Product this is for
         String cid;     //!< Client this is for
         int qty;        //!< Quantity of item being waited on

@@ -1,5 +1,6 @@
 public class WarehouseContext {
         private static WarehouseContext instance = null;
+        private Warehouse warehouse;
         private WarehouseState current_state;
         private static enum user_type {
                 CLIENT,
@@ -10,6 +11,12 @@ public class WarehouseContext {
         private String client_id;
 
         private WarehouseContext() {
+                /* try to load saved data */
+                warehouse = Warehouse.retrieve();
+                if (warehouse == null) {
+                        /* if failed, load a new warehouse */
+                        warehouse = Warehouse.instance();
+                }
         }
 
         public static WarehouseContext instance() {
@@ -44,6 +51,14 @@ public class WarehouseContext {
                                 current_state = next;
                         }
                 }
+                /* ask to save before quitting */
+                System.out.println("Would you like to save? "
+                                   + "y for yes; anything else for no");
+                try {
+                        if (System.in.read() == 'y') {
+                                Warehouse.save();
+                        }
+                } catch (Exception e) {}
         }
 
         public static void main(String[] args) {

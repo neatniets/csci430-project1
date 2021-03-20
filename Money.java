@@ -1,6 +1,8 @@
 import java.text.DecimalFormat;
+import java.io.Serializable;
 /** A class to help with handling money formatting. */
-public class Money {
+public class Money implements Serializable {
+        private static final long serialVersionUID = 1L;
         private String amt;
         private static DecimalFormat fmt = new DecimalFormat("#.##");
 

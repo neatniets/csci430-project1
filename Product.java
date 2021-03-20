@@ -1,9 +1,11 @@
 import java.util.TreeMap;
 import java.util.LinkedList;
 import java.util.Iterator;
-
+import java.io.Serializable;
+import java.io.IOException;
 /** Represents a Product that the warehouse stocks. */
-public class Product {
+public class Product implements Serializable {
+        private static final long serialVersionUID = 1L;
         private static final String PROD_STRING = "P";
 
         private String id;      //!< unique identifier
@@ -14,7 +16,7 @@ public class Product {
          * which have a quantity of 0 */
         private TreeMap<String, WaitlistEntry> waitlist;
         private LinkedList<Supply> supplyList;
-	
+
         /** Construct a new Product.
          * @param[in]   name    name of Product
          * @post        price and quantity are set to 0 */
@@ -28,7 +30,7 @@ public class Product {
         public Product(String name,
                        Money price,
                        int quantity) {
-                this.id = PROD_STRING + (ProductIdServer.instance()).getId();
+                this.id = PROD_STRING + ProductIdServer.instance().getId();
                 this.name = name;
                 this.price = price;
                 this.quantity = quantity;
@@ -120,7 +122,7 @@ public class Product {
                 }
         }
 
-        /** Place an order for this product. 
+        /** Place an order for this product.
          * The stock will be decreased by as much of the ordering quantity as
          * possible. If the ordering quantity is higher than what is in stock,
          * the remaining amount will be added to the waitlist for that client.
@@ -190,11 +192,11 @@ public class Product {
                 /* no entries with qty > 0 */
                 return false;
         }
-		
+
 	public Iterator<Supply> getSuppliersOfProduct() {
             return supplyList.iterator();
 	}
-		
+
 	public boolean addSupplytoList(Supply supply) {
               supplyList.add(supply);
               return true;
@@ -211,5 +213,13 @@ public class Product {
                        + "\nPrice: " + getPrice() + "\nStock: "
                        + getQuantity() + "\nQuantity waited on by clients: "
                        + sumWaitlist() + "\n";
+        }
+
+        private void readObject(java.io.ObjectInputStream in)
+                throws IOException, ClassNotFoundException {
+                        /* read the object in the default way */
+                        in.defaultReadObject();
+                        /* increment the ID server */
+                        ProductIdServer.instance().getId();
         }
 }

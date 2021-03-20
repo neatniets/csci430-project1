@@ -1,6 +1,8 @@
 import java.util.LinkedList;
 import java.util.Iterator;
-public class Supplier {
+import java.io.Serializable;
+import java.io.IOException;
+public class Supplier implements Serializable {
   private static final long serialVersionUID = 1L;
   private String name;
   private String address;
@@ -46,7 +48,7 @@ public class Supplier {
     this.name = name;
     this.address = address;
     this.phone = phone;
-    id = SUPPLIER_STRING + (SupplierIdServer.instance()).getId();
+    id = SUPPLIER_STRING + SupplierIdServer.instance().getId();
   }
   public String getName() {
     return name;
@@ -82,4 +84,11 @@ public class Supplier {
     return "ID:" + getId() + "\nSupplier name: " + getName() + "\naddress " + getAddress()+ "\nphone " + getPhone();
 
   }
+        private void readObject(java.io.ObjectInputStream in)
+                throws IOException, ClassNotFoundException {
+                        /* read the object in the default way */
+                        in.defaultReadObject();
+                        /* increment the ID server */
+                        SupplierIdServer.instance().getId();
+        }
 }

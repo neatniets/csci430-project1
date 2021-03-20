@@ -3,29 +3,26 @@ import java.io.*;
 public class Warehouse implements Serializable {
         private static final long serialVersionUID = 1L;
 
+        /** List of all clients of the warehouse. */
+        private ClientList clist;
         /** List of all products stocked by warehouse. */
         private ProductList plist;
-        /** List of all clients tracked by warehouse. */
-        private ClientList clist;
         /** List of all active suppliers for the warehouse. */
         private SupplierList slist;
         private static Warehouse warehouse = null;
         private Warehouse() {
-                plist = new ProductList();
-                clist = ClientList.instance();
-                slist = new SupplierList();
         }
         public static Warehouse instance() {
-                /*if (warehouse == null) {
-                        MemberIdServer.instance(); // instantiate all singletons
-                        return (warehouse = new Warehouse());
-                } else {
-                        return warehouse;
-                }*/
                 if (warehouse == null) {
                         warehouse = new Warehouse();
+                        warehouse.init();
                 }
                 return warehouse;
+        }
+        private void init() {
+                clist = ClientList.instance();
+                plist = ProductList.instance();
+                slist = SupplierList.instance();
         }
 
         /** Add a product to warehouse.
@@ -287,8 +284,7 @@ public class Warehouse implements Serializable {
                 try {
                         FileInputStream file = new FileInputStream("WarehouseData");
                         ObjectInputStream input = new ObjectInputStream(file);
-                        input.readObject();
-                        //MemberIdServer.retrieve(input);
+                        warehouse = (Warehouse)input.readObject();
                         return warehouse;
                 } catch(IOException ioe) {
                         ioe.printStackTrace();
@@ -302,36 +298,14 @@ public class Warehouse implements Serializable {
                 try {
                         FileOutputStream file = new FileOutputStream("WarehouseData");
                         ObjectOutputStream output = new ObjectOutputStream(file);
-                        output.writeObject(warehouse);
-                        //output.writeObject(MemberIdServer.instance());
+                        output.writeObject(instance());
                         return true;
                 } catch(IOException ioe) {
                         ioe.printStackTrace();
                         return false;
                 }
         }
-        private void writeObject(java.io.ObjectOutputStream output) {
-                try {
-                        output.defaultWriteObject();
-                        output.writeObject(warehouse);
-                } catch(IOException ioe) {
-                        System.out.println(ioe);
-                }
-        }
-        private void readObject(java.io.ObjectInputStream input) {
-                try {
-                        input.defaultReadObject();
-                        if (warehouse == null) {
-                                warehouse = (Warehouse) input.readObject();
-                        } else {
-                                input.readObject();
-                        }
-                } catch(IOException ioe) {
-                        ioe.printStackTrace();
-                } catch(Exception e) {
-                        e.printStackTrace();
-                }
-        }
+
         public String toString() {
                 return plist + "\n" + clist + "\n" + slist + "\n";
         }

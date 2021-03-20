@@ -159,4 +159,11 @@ public boolean makePayment(Money payment) {
     String string = "Client name " + name + " address " + address + " id " + id + " phone " + phone;
     return string;
   }
+  private void readObject(java.io.ObjectInputStream in)
+    throws IOException, ClassNotFoundException {
+    /* read the object in the default way */
+    in.defaultReadObject();
+    /* increment the ID server */
+    ClientIdServer.instance().getId();
+  }
 }

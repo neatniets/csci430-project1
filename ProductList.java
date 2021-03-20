@@ -1,12 +1,21 @@
 import java.util.TreeMap;
 import java.util.Iterator;
+import java.io.Serializable;
 /** Container which holds Products stocked by the warehouse. */
-public class ProductList {
+public class ProductList implements Serializable {
+        private static final long serialVersionUID = 1L;
         private TreeMap<String, Product> map; //!< container for Products
+        private static ProductList instance = null;
 
         /** Construct a new Product list. */
-        public ProductList() {
+        private ProductList() {
                 map = new TreeMap<String, Product>();
+        }
+        public static ProductList instance() {
+                if (instance == null) {
+                        instance = new ProductList();
+                }
+                return instance;
         }
 
         /** Find a Product by its ID.

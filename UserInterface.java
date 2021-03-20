@@ -32,11 +32,15 @@ public class UserInterface {
   private static final int RECEIVE_SHIPMENT = 24;
   private static final int remove_quantity_of_item_from_shopping_cart = 25;
   private static final int MAKE_PAYMENT = 26;
-  private static final int HELP = 27;
+  private static final int SAVE = 27;
+  private static final int HELP = 28;
 
   //Constructor
   private UserInterface() {
-    warehouse = Warehouse.instance();
+          warehouse = Warehouse.retrieve();
+          if (warehouse == null) {
+                  warehouse = Warehouse.instance();
+          }
   }
 
   //UserInterface instance provides window for user interactions.
@@ -683,6 +687,9 @@ public class UserInterface {
         case MAKE_PAYMENT:
           makePayment();
           break;
+        case SAVE:
+          Warehouse.save();
+          break;
         case HELP:
           help();
           break;
@@ -693,8 +700,6 @@ public class UserInterface {
   }
 
   public static void main(String[] args) {
-          Money tmp = new Money(3.49);
-          System.out.println(tmp + " > " + 0.00 + " = " + tmp.compareTo(0.00));
     UserInterface.instance().process();
   }
 

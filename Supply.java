@@ -1,4 +1,6 @@
-public class Supply {
+import java.io.Serializable;
+public class Supply implements Serializable {
+        private static final long serialVersionUID = 1L;
 	private String supplier_id;
 	private String product_id;
 	private double price;
