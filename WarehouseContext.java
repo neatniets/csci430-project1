@@ -2,12 +2,12 @@ public class WarehouseContext {
         private static WarehouseContext instance = null;
         private Warehouse warehouse;
         private WarehouseState current_state;
-        private static enum user_type {
+        public static enum UserType {
                 CLIENT,
                 CLERK,
                 MANAGER
         };
-        private user_type type;
+        private UserType type;
         private String client_id;
 
         private WarehouseContext() {
@@ -26,8 +26,18 @@ public class WarehouseContext {
                 return instance;
         }
 
+        public void setUserType(UserType type) {
+                this.type = type;
+        }
+        public UserType getUserType() {
+                return type;
+        }
+
         public void setClientId(String cid) {
                 client_id = cid;
+        }
+        public String getClientId() {
+                return client_id;
         }
 
         /** Process the current state & state transitions until exit condition
@@ -42,10 +52,6 @@ public class WarehouseContext {
                          * state */
                         WarehouseState next = current_state.run();
                         if (next == null) { // state is exiting
-                                /* TODO: add state-specific exit stuff. e.g.
-                                 * when a clerk exits after becoming a client,
-                                 * they should return to clerk state but not
-                                 * exit */
                                 is_exiting = true;
                         } else { // state is transitioning
                                 current_state = next;

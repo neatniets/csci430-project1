@@ -10,14 +10,16 @@ clean:
 WarehouseContext.class: %.class: %.java WarehouseState.java LoginState.java
 	$(JC) $<
 
-WarehouseState.class: %.class: %.java
+WarehouseState.class: %.class: %.java WarehouseContext.java
 	$(JC) $<
 
 LoginState.class: %.class: %.java WarehouseState.java ClientMenuState.java \
-	ClerkMenuState.java ManagerMenuState.java Warehouse.java
+	ClerkMenuState.java ManagerMenuState.java Warehouse.java \
+	WarehouseContext.java
 	$(JC) $<
 
-ClientMenuState.class: %.class: %.java WarehouseState.java
+ClientMenuState.class: %.class: %.java WarehouseState.java LoginState.java \
+	ClerkMenuState.java WarehouseContext.java
 	$(JC) $<
 
 ClerkMenuState.class: %.class: %.java WarehouseState.java

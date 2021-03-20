@@ -48,14 +48,21 @@ public class LoginState extends WarehouseState {
         }
 
         public WarehouseState run() {
+                System.out.println("How would you like to log in?");
                 Cmds cmd = Cmds.HELP;
                 do {
                         switch (cmd) {
                         case CLIENT_LOGIN:
+                                context.setUserType(WarehouseContext
+                                                    .UserType.CLIENT);
                                 return clientLogin();
                         case CLERK_LOGIN:
+                                context.setUserType(WarehouseContext
+                                                    .UserType.CLERK);
                                 return ClerkMenuState.instance();
                         case MANAGER_LOGIN:
+                                context.setUserType(WarehouseContext
+                                                    .UserType.MANAGER);
                                 return ManagerMenuState.instance();
                         case HELP:
                                 printHelp(Cmds.values(), cmd_strings);

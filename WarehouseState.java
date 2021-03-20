@@ -3,12 +3,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 public abstract class WarehouseState {
-        protected static WarehouseContext context;
+        protected WarehouseContext context;
+        protected Warehouse warehouse;
         private static BufferedReader reader
                 = new BufferedReader(new InputStreamReader(System.in));
 
         protected WarehouseState() {
                 context = WarehouseContext.instance();
+                warehouse = Warehouse.instance();
         }
 
         //Function to get user's input.
