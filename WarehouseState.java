@@ -66,13 +66,16 @@ public abstract class WarehouseState {
 
         protected static
         <T extends Enum<T>>
-        T getCommand(T[] enum_vals) {
+        T getCommand(T[] enum_vals,
+                     int help_ord) {
                 int len = enum_vals.length;
                 int cmd;
                 do {
                         try {
                                 cmd = Integer
-                                      .parseInt(getToken("Enter command:"));
+                                      .parseInt(getToken("Enter command "
+                                                         + "(" + help_ord
+                                                         + " for help):"));
                                 if ((cmd >= 0) && (cmd < len)) {
                                         return enum_vals[cmd];
                                 }

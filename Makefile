@@ -19,7 +19,8 @@ LoginState.class: %.class: %.java WarehouseState.java ClientMenuState.java \
 	$(JC) $<
 
 ClientMenuState.class: %.class: %.java WarehouseState.java LoginState.java \
-	ClerkMenuState.java WarehouseContext.java
+	ClerkMenuState.java WarehouseContext.java Money.java CartItem.java \
+	Transaction.java Client.java
 	$(JC) $<
 
 ClerkMenuState.class: %.class: %.java WarehouseState.java

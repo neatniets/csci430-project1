@@ -57,7 +57,8 @@ public class ClientMenuState extends WarehouseState {
                                 System.err.println("Error in switch");
                                 System.exit(1);
                         }
-                } while ((cmd = getCommand(Cmds.values())) != Cmds.LOGOUT);
+                } while ((cmd = getCommand(Cmds.values(), Cmds.HELP.ordinal()))
+                         != Cmds.LOGOUT);
                 System.out.println("Logging out");
 
                 /* figure out where to return to */
@@ -97,8 +98,41 @@ public class ClientMenuState extends WarehouseState {
                 }
         }
 
+        private void printCart() {
+                Money total = new Money();
+                Iterator<CartItem> iter
+                        = warehouse.getCartContents(context.getClientId());
+                /* print header */
+                String fmt = "%-10s%-10s%10s%10s%10s\n";
+                System.out.format(fmt, "ID", "Name", "Quantity",
+                                  "Price", "Total");
+                String hrule = "";
+                for (int i = 0; i < 50; i++) {
+                        hrule += '-';
+                }
+                System.out.println(hrule);
+                /* print each cart item */
+                while (iter.hasNext()) {
+                        CartItem item = iter.next();
+                        if (item.getQuantity() == 0) { // ignore 0 qty
+                                continue;
+                        }
+                        Product p = item.getProduct();
+                        Money price = p.getPrice();
+                        Money price4all = new Money(price.toValue()
+                                                    * item.getQuantity());
+                        System.out.format(fmt, p.getId(), p.getName(),
+                                          item.getQuantity(), price,
+                                          price4all);
+                        total.add(price4all);
+                }
+                System.out.println(hrule);
+                /* print total of all items in cart */
+                System.out.format(fmt, "Total", "", "", "", total.toString());
+        }
+
         private void editCart() {
-                /* TODO */
+                printCart();
         }
 
         private void showWaitlist() {

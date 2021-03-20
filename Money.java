@@ -4,7 +4,7 @@ import java.io.Serializable;
 public class Money implements Serializable {
         private static final long serialVersionUID = 1L;
         private String amt;
-        private static DecimalFormat fmt = new DecimalFormat("#.##");
+        private static DecimalFormat fmt = new DecimalFormat("0.00");
 
         private static String convert(double amt) {
                 return fmt.format(amt);

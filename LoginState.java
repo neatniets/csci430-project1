@@ -71,7 +71,8 @@ public class LoginState extends WarehouseState {
                                 System.err.println("Error in switch");
                                 System.exit(1);
                         }
-                } while ((cmd = getCommand(Cmds.values())) != Cmds.EXIT);
+                } while ((cmd = getCommand(Cmds.values(), Cmds.HELP.ordinal()))
+                         != Cmds.EXIT);
                 return null;
         }
 }
