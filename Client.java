@@ -15,6 +15,7 @@ public class Client implements Serializable {
   private static final String Client_STRING = "M";
   private shoppingCart cart = new shoppingCart();
   private LinkedList<Transaction> transactionList;
+  private LinkedList<WaitlistEntry> waitlist;
 
   public  Client (String name, String address, String phone) {
     this.name = name;
@@ -22,7 +23,8 @@ public class Client implements Serializable {
     this.phone = phone;
     id = Client_STRING + (ClientIdServer.instance()).getId();
     balance = new Money(0.0);
-	transactionList = new LinkedList<Transaction>();
+    transactionList = new LinkedList<Transaction>();
+    waitlist = new LinkedList<WaitlistEntry>();
   }
 
   public String getName() {
@@ -52,6 +54,15 @@ public class Client implements Serializable {
   public void setPhone(String newPhone) {
     phone = newPhone;
   }
+
+  public void addWaitlist(WaitlistEntry entry) {
+    waitlist.add(entry);
+  }
+
+  public Iterator<WaitlistEntry> getWaitlist() {
+    return waitlist.iterator();
+  }
+
   public Transaction processOrder() {
     /* Initialize a Transaction for an order */
     Transaction tran = new Transaction(new Date().toString(), "", new Money(0.00));
@@ -68,6 +79,16 @@ public class Client implements Serializable {
         /* add shipped order to transaction */
         if (shipped_qty > 0) {
           tran.addItemOrder(prod.getId(), shipped_qty, prod.getPrice());
+        }
+        /* obtain the WaitlistEntry if not all was shipped */
+        if (shipped_qty != order_qty) {
+          WaitlistEntry entry = prod.getWaitlistEntry(id);
+          /* check to make sure the waitlist entry is not already in the
+           * list; the waitlist entry would contain the exact amount not
+           * shipped if it's fresh */
+          if (entry.getQuantity() == (order_qty - shipped_qty)) {
+            addWaitlist(entry);
+          }
         }
       }
     }
@@ -89,7 +110,7 @@ public class Client implements Serializable {
     balance.add(amt);
   }
   private boolean addTransaction(Transaction t) {
-	transactionList.add(t); 
+	transactionList.add(t);
 	return true;
   }
   public int fillOrder(String product_id,
@@ -151,7 +172,7 @@ public boolean makePayment(Money payment) {
       return false;
     }
   }
-  
+
   public boolean equals(String id) {
     return this.id.equals(id);
   }

@@ -419,7 +419,7 @@ public class UserInterface {
 
   public void PrintWaitlist() {
     String id = getToken("Product ID: ");
-    Iterator<WaitlistEntry> iter = warehouse.getWaitlist(id);
+    Iterator<WaitlistEntry> iter = warehouse.getProductWaitlist(id);
     if (iter == null) {
       System.out.println("Product not found.");
       return;
@@ -516,7 +516,7 @@ public class UserInterface {
     String product_id = getToken("Product ID: ");
     int qty = Integer.parseInt(getToken("Quantity: "));
     /* get an iterator for the product's waitlist */
-    Iterator<WaitlistEntry> iter = warehouse.getWaitlist(product_id);
+    Iterator<WaitlistEntry> iter = warehouse.getProductWaitlist(product_id);
     /* verify the product ID was valid */
     if (iter == null) { // invalid
       System.out.println("No product with the ID '" + product_id + "' found");

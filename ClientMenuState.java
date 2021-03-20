@@ -102,6 +102,24 @@ public class ClientMenuState extends WarehouseState {
         }
 
         private void showWaitlist() {
-                /* TODO */
+                /* get iterator */
+                Iterator<WaitlistEntry> iter
+                        = warehouse.getClientWaitlist(context.getClientId());
+                /* print header */
+                String fmt = "%-10s%10s\n";
+                System.out.format(fmt, "ID", "Quantity");
+                for (int i = 0; i < 20; i++) {
+                        System.out.print('-');
+                }
+                System.out.println();
+
+                /* print non-zero entries */
+                while (iter.hasNext()) {
+                        WaitlistEntry we = iter.next();
+                        if (we.getQuantity() > 0) {
+                                System.out.format(fmt, we.getProductId(),
+                                                  we.getQuantity());
+                        }
+                }
         }
 }

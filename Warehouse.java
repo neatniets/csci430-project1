@@ -150,12 +150,20 @@ public class Warehouse implements Serializable {
           }
         }
 
-        public Iterator<WaitlistEntry> getWaitlist(String prod_id) {
+        public Iterator<WaitlistEntry> getProductWaitlist(String prod_id) {
           Product p = plist.find(prod_id);
           if (p == null) {
             return null;
           } else {
             return p.getWaitlist();
+          }
+        }
+        public Iterator<WaitlistEntry> getClientWaitlist(String client_id) {
+          Client c = clist.getClient(client_id);
+          if (c == null) {
+            return null;
+          } else {
+            return c.getWaitlist();
           }
         }
         public WaitlistEntry getWaitlistEntry(String client_id,
