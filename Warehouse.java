@@ -243,6 +243,48 @@ public class Warehouse implements Serializable {
                 /* add product to cart */
                 return c.getShoppingCart().insertProduct(p, quantity);
         }
+        public boolean setCartItemQty(String client_id,
+                                      String product_id,
+                                      int qty) {
+                /* find client */
+                Client c = clist.getClient(client_id);
+                if (c == null) { // client not found
+                        return false;
+                }
+                /* find product */
+                Product p = plist.find(product_id);
+                if (p == null) { // product not found
+                        return false;
+                }
+                /* modify qty */
+                return c.getShoppingCart().setProductQty(p, qty);
+        }
+        public boolean removeFromCart(String client_id,
+                                      String product_id,
+                                      int qty) {
+                /* find client */
+                Client c = clist.getClient(client_id);
+                if (c == null) { // client not found
+                        return false;
+                }
+                /* find product */
+                Product p = plist.find(product_id);
+                if (p == null) { // product not found
+                        return false;
+                }
+                /* remove qty */
+                return c.getShoppingCart().removeProduct(p, qty);
+        }
+        public CartItem getCartItem(String client_id,
+                                    String product_id) {
+                /* get client */
+                Client c = clist.getClient(client_id);
+                if (c == null) { // client not found
+                        return null;
+                }
+                /* get cart item or null */
+                return c.getShoppingCart().findProduct(product_id);
+        }
         public Iterator<CartItem> getCartContents(String client_id) {
                 /* try to find client */
                 Client c = clist.getClient(client_id);

@@ -22,6 +22,23 @@ public class shoppingCart implements Serializable {
     return true;
   }
 
+  public boolean setProductQty(Product p, int qty) {
+          /* Figure out if item is in cart */
+          CartItem item = findProduct(p.getId());
+          if (item == null) { // item not in cart; insert instead
+                  return insertProduct(p, qty);
+          } else { // modify qty
+                  /* verify qty non-negative */
+                  if (qty < 0) {
+                          return false;
+                  }
+                  /* set qty */
+                  item.setQuantity(qty);
+                  /* return success */
+                  return true;
+          }
+  }
+
   public boolean removeProduct(Product product, int quantity) {
     if (quantity <= 0) {
       return false;
@@ -53,7 +70,7 @@ public class shoppingCart implements Serializable {
     Iterator<CartItem> iter = getProducts();
     while (iter.hasNext()) {
       CartItem item = iter.next();
-      if (item.getProduct().getId() == product_id) {
+      if (item.getProduct().getId().compareTo(product_id) == 0) {
         return item;
       }
     }

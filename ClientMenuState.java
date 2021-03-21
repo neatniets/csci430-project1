@@ -131,8 +131,144 @@ public class ClientMenuState extends WarehouseState {
                 System.out.format(fmt, "Total", "", "", "", total.toString());
         }
 
+        private void addItem() {
+                String pid = null;
+                /* get valid product ID */
+                boolean is_pid_valid = false;
+                while (!is_pid_valid) {
+                        /* get token */
+                        pid = getToken("Enter product ID: ");
+                        /* check token */
+                        if (warehouse.getProduct(pid) == null) { // invalid
+                                System.out.println("Invalid pid.");
+                        } else { // valid
+                                is_pid_valid = true;
+                        }
+                }
+
+                /* get qty & try to add */
+                int qty;
+                boolean is_qty_valid = false;
+                while (!is_qty_valid) {
+                        /* get qty */
+                        qty = getNumber("Enter qty to add: ");
+                        /* try to add */
+                        if (!warehouse.add2ShoppingCart(context.getClientId(),
+                                                        pid, qty)) { // error
+                                System.out.println("Invalid qty.");
+                        } else { // success
+                                is_qty_valid = true;
+                        }
+                }
+                /* return cuz already added */
+        }
+
+        private void modifyItem() {
+                String pid = null;
+                /* get cart item & product id */
+                boolean is_pid_valid = false;
+                while (!is_pid_valid) {
+                        /* get token */
+                        pid = getToken("Enter product ID: ");
+                        /* check if cart item exists */
+                        if (warehouse.getCartItem(context.getClientId(), pid)
+                            == null) { // invalid
+                                System.out.println("Invalid pid.");
+                        } else { // valid
+                                is_pid_valid = true;
+                        }
+                }
+
+                /* get qty & try to modify */
+                int qty;
+                boolean is_qty_valid = false;
+                while (!is_qty_valid) {
+                        /* get qty */
+                        qty = getNumber("Enter qty to change to: ");
+                        /* try to modify */
+                        if (!warehouse.setCartItemQty(context.getClientId(),
+                                                      pid, qty)) { // error
+                                System.out.println("Invalid qty.");
+                        } else { // success
+                                is_qty_valid = true;
+                        }
+                }
+                /* return cuz already modified */
+        }
+        private void removeItem() {
+                CartItem item = null;
+                String pid = null;
+                /* get cart item & product id */
+                boolean is_pid_valid = false;
+                while (!is_pid_valid) {
+                        /* get token */
+                        pid = getToken("Enter product ID: ");
+                        /* check if cart item exists */
+                        item = warehouse.getCartItem(context.getClientId(),
+                                                     pid);
+                        if (item == null) { // invalid
+                                System.out.println("Invalid pid.");
+                        } else { // valid
+                                is_pid_valid = true;
+                        }
+                }
+
+                /* remove all from cart */
+                warehouse.removeFromCart(context.getClientId(), pid,
+                                         item.getQuantity());
+        }
+        private void placeOrder() {
+                Transaction t = warehouse.processOrder(context.getClientId());
+                System.out.println(t.toString());
+        }
+
+        private enum CartCmds {
+                EXIT,
+                PRINT_CART,
+                ADD_ITEM,
+                MOD_ITEM,
+                RM_ITEM,
+                PLACE_ORDER,
+                HELP
+        };
+        private static String[] cart_cmd_strings = {
+                " to exit.",
+                " to print the cart.",
+                " to add an item.",
+                " to modify an item.",
+                " to remove an item.",
+                " to place an order of this cart.",
+                " to see this help."
+        };
         private void editCart() {
-                printCart();
+                CartCmds cmd = CartCmds.HELP;
+                do {
+                        switch (cmd) {
+                        case PRINT_CART:
+                                printCart();
+                                break;
+                        case ADD_ITEM:
+                                addItem();
+                                break;
+                        case MOD_ITEM:
+                                modifyItem();
+                                break;
+                        case RM_ITEM:
+                                removeItem();
+                                break;
+                        case PLACE_ORDER:
+                                placeOrder();
+                                break;
+                        case HELP:
+                                printHelp(CartCmds.values(), cart_cmd_strings);
+                                break;
+                        default:
+                                System.err.println("Error in switch");
+                                System.exit(1);
+                        }
+                } while ((cmd = getCommand(CartCmds.values(),
+                                           CartCmds.HELP.ordinal()))
+                         != CartCmds.EXIT);
         }
 
         private void showWaitlist() {
