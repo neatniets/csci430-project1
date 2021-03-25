@@ -228,7 +228,7 @@ public class ClerkMenuState extends WarehouseState {
                                       warehouse.fillOrder(entry.getClientId(), pid, entry.getQuantity());
                                       is_valid_token = true;
                               }
-                              else if (choice.compareTo("FILL") == 0 && entry.getQuantity() < qty) {
+                              else if (choice.compareTo("FILL") == 0 && entry.getQuantity() > qty) {
                                       System.out.println("Not enough quantity.");
                                       is_valid_token = true;
                               }
