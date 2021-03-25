@@ -88,8 +88,5 @@ Supply.class: Supply.java
 Money.class: Money.java
 	$(JC) $<
 
-UserInterface.class: %.class: %.java
-	$(JC) $<
-
 IOHelper.class: %.class: %.java
 	$(JC) $<
