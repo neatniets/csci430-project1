@@ -53,4 +53,10 @@ public class WaitlistEntry implements Serializable {
                         return true;
                 }
         }
+
+        /* toString for WaitlistEntry */
+        public String toString() {
+                String string = "Product ID " + pid + " Client ID " + cid + " Quantity " + qty;
+                return string;
+        }
 }
