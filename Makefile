@@ -28,7 +28,9 @@ ClerkMenuState.class: %.class: %.java WarehouseState.java LoginState.java \
 	ClientMenuState.java
 	$(JC) $<
 
-ManagerMenuState.class: %.class: %.java WarehouseState.java
+ManagerMenuState.class: %.class: %.java WarehouseState.java Money.java \
+	Product.java Supplier.java Client.java ClerkMenuState.java \
+	Warehouse.java
 	$(JC) $<
 
 Warehouse.class: Warehouse.java ProductList.java Product.java Client.java \
@@ -87,4 +89,7 @@ Money.class: Money.java
 	$(JC) $<
 
 UserInterface.class: %.class: %.java
+	$(JC) $<
+
+IOHelper.class: %.class: %.java
 	$(JC) $<
