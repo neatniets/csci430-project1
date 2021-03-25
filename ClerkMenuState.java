@@ -241,6 +241,10 @@ public class ClerkMenuState extends WarehouseState {
 
                       }
               }
+              if (qty > 0) {
+                      warehouse.add2Stock(pid, qty);
+                      System.out.println(qty + " added to stock.");
+              }
       }
 }
       
