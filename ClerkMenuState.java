@@ -182,9 +182,7 @@ public class ClerkMenuState extends WarehouseState {
            Iterator<WaitlistEntry> iter = warehouse.getProductWaitlist(pid);
             while (iter.hasNext()) {
                 WaitlistEntry entry = iter.next();
-                while (iter.hasNext()) {
-                        System.out.println(iter.next().toString());
-                }
+                System.out.println(entry.toString());
             }
       }
       
@@ -213,7 +211,7 @@ public class ClerkMenuState extends WarehouseState {
              Iterator<WaitlistEntry> iter = warehouse.getProductWaitlist(pid);
                 while (iter.hasNext()) {
                     WaitlistEntry entry = iter.next();
-                    System.out.println(iter.next().toString());
+                    System.out.println(entry.toString());
                     boolean is_valid_token = false;
                     while (!is_valid_token) {
                         String choice = getToken("Enter FILL to complete this order or SKIP to skip it:");
