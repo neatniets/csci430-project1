@@ -24,7 +24,6 @@ public class ManagerMenuState extends WarehouseState {
 
 
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private static Warehouse warehouse;
     private static ManagerMenuState instance = null;
 
     //manager specific calls
@@ -83,7 +82,8 @@ public class ManagerMenuState extends WarehouseState {
                 Supplier m;
                 m = warehouse.getSupplier(mId);
                 if (m != null) {
-                    int price = getNumber("Enter price");
+                    double price
+                        = Double.parseDouble(IOHelper.getToken("Enter Price:"));
                     warehouse.addSupply(p.getId(), m.getId(), price);
                     System.out.println("Supplier added.");
                     break;
