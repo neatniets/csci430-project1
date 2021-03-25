@@ -214,6 +214,11 @@ public class ClerkMenuState extends WarehouseState {
               Iterator<WaitlistEntry> iter = warehouse.getProductWaitlist(pid);
               while (iter.hasNext()) {
                       WaitlistEntry entry = iter.next();
+                      if ((entry.getQuantity() == 0)
+                          || (qty == 0)) {
+                              continue;
+                      }
+                      System.out.println("qty = " + qty);
                       System.out.println(entry.toString());
                       boolean is_valid_token = false;
                       while (!is_valid_token) {
