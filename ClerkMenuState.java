@@ -1,6 +1,6 @@
 import java.util.Iterator;
+import java.lang.Integer;
 
-/* TODO: implement class */
 public class ClerkMenuState extends WarehouseState {
         private static ClerkMenuState instance = null;
 
@@ -100,16 +100,17 @@ public class ClerkMenuState extends WarehouseState {
       
       private void listProducts() {
                 Iterator<Product> iter = warehouse.getProducts();
-                String fmt = "%-10s%-10s%-10s\n";
-                System.out.format(fmt, "ID", "Name", "Price");
-                for (int i = 0; i < 30; i++) {
+                String fmt = "%-10s%-10s%-10s%10s\n";
+                System.out.format(fmt, "ID", "Name", "Price", "Stock");
+                for (int i = 0; i < 40; i++) {
                         System.out.print("-");
                 }
                 System.out.println();
                 while (iter.hasNext()) {
                         Product p = iter.next();
                         System.out.format(fmt, p.getId(), p.getName(),
-                                          p.getPrice().toString());
+                                          p.getPrice().toString(),
+                                          Integer.toString(p.getQuantity()));
                 }
         }
       
