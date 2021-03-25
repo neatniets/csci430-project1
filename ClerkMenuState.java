@@ -183,7 +183,9 @@ public class ClerkMenuState extends WarehouseState {
            Iterator<WaitlistEntry> iter = warehouse.getProductWaitlist(pid);
             while (iter.hasNext()) {
                 WaitlistEntry entry = iter.next();
-                System.out.println(entry.toString());
+                if (entry.getQuantity() != 0) {
+                        System.out.println(entry.toString());
+                }
             }
       }
       
