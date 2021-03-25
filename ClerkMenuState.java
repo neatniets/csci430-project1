@@ -190,52 +190,52 @@ public class ClerkMenuState extends WarehouseState {
       }
       
       private void receiveShipment() {
-            String pid = null;
-                /* get valid product ID */
-                boolean is_pid_valid = false;
-                while (!is_pid_valid) {
-                        /* get token */
-                        pid = getToken("Enter product ID: ");
-                        /* check token */
-                        if (warehouse.getProduct(pid) == null) { // invalid
-                                System.out.println("Invalid pid.");
-                        } else { // valid
-                                is_pid_valid = true;
-                        }
-                }
-             int qty = 0;
-                boolean is_qty_valid = false;
-                while (!is_qty_valid) {
-                        /* get qty */
-                        qty = getNumber("Enter qty to add: ");
-                        if (qty > 0)
-                                is_qty_valid = true;
-                        }
-             Iterator<WaitlistEntry> iter = warehouse.getProductWaitlist(pid);
-                while (iter.hasNext()) {
-                    WaitlistEntry entry = iter.next();
-                    System.out.println(entry.toString());
-                    boolean is_valid_token = false;
-                    while (!is_valid_token) {
-                        String choice = getToken("Enter FILL to complete this order or SKIP to skip it:");
-                        if(choice.compareTo("FILL") == 0 && entry.getQuantity() <= qty) {
-                            qty = qty - entry.getQuantity();
-                            warehouse.fillOrder(entry.getClientId(), pid, entry.getQuantity());
-                            is_valid_token = true;
-                        }
-                        else if (choice.compareTo("FILL") == 0 && entry.getQuantity() < qty) {
-                            System.out.println("Not enough quantity.");
-                            is_valid_token = true;
-                        }
-                        else if (choice.compareTo("SKIP") != 0 && choice.compareTo("FILL") != 0) {
-                            System.out.println("Not a valid entry. Please enter SKIP or FILL.");
-                        }
-                        else {
-                            is_valid_token = true;
-                        }
-                       
-                    }
-                }
+              String pid = null;
+              /* get valid product ID */
+              boolean is_pid_valid = false;
+              while (!is_pid_valid) {
+                      /* get token */
+                      pid = getToken("Enter product ID: ");
+                      /* check token */
+                      if (warehouse.getProduct(pid) == null) { // invalid
+                              System.out.println("Invalid pid.");
+                      } else { // valid
+                              is_pid_valid = true;
+                      }
+              }
+              int qty = 0;
+              boolean is_qty_valid = false;
+              while (!is_qty_valid) {
+                      /* get qty */
+                      qty = getNumber("Enter qty to add: ");
+                      if (qty > 0)
+                              is_qty_valid = true;
+              }
+              Iterator<WaitlistEntry> iter = warehouse.getProductWaitlist(pid);
+              while (iter.hasNext()) {
+                      WaitlistEntry entry = iter.next();
+                      System.out.println(entry.toString());
+                      boolean is_valid_token = false;
+                      while (!is_valid_token) {
+                              String choice = getToken("Enter FILL to complete this order or SKIP to skip it:");
+                              if(choice.compareTo("FILL") == 0 && entry.getQuantity() <= qty) {
+                                      qty = qty - entry.getQuantity();
+                                      warehouse.fillOrder(entry.getClientId(), pid, entry.getQuantity());
+                                      is_valid_token = true;
+                              }
+                              else if (choice.compareTo("FILL") == 0 && entry.getQuantity() < qty) {
+                                      System.out.println("Not enough quantity.");
+                                      is_valid_token = true;
+                              }
+                              else if (choice.compareTo("SKIP") != 0 && choice.compareTo("FILL") != 0) {
+                                      System.out.println("Not a valid entry. Please enter SKIP or FILL.");
+                              }
+                              else {
+                                      is_valid_token = true;
+                              }
+
+                      }
+              }
       }
 }
       
